@@ -1,0 +1,22 @@
+html, body {
+    background-color: navy !important;
+    margin: 2vw;
+    color: black !important;
+}
+
+
+/* SET FONT SIZE FOR SMALLER DISPLAYS */
+@media screen and (max-width: 900px) {
+    html, body {
+        font-size: 3vw;
+    }
+}
+
+img, video {
+    width: 15vw !important;
+}
+
+a {
+    text-decoration: none !important;
+    color: navy !important;
+}
