@@ -9,7 +9,7 @@ $(document).ready(
     function () {
 
         $("#login-form").submit(sendLogin);
-        $("#logout").click(sendLogout);
+        $("#logoutButton").click(sendLogout);
 
     });
 

@@ -1,22 +1,73 @@
 html, body {
+    font-size: 1vw;
     background-color: navy !important;
     margin: 2vw;
-    color: black !important;
+    color: white !important;
+    hyphens: auto;
+    box-sizing: content-box;
 }
 
+h1 {
+    font-weight: bold !important;
+}
 
 /* SET FONT SIZE FOR SMALLER DISPLAYS */
 @media screen and (max-width: 900px) {
     html, body {
-        font-size: 3vw;
+        font-size: 2vw;
+    }
+
+    svg {
+        width: 3vw !important;
     }
 }
 
 img, video {
-    width: 15vw !important;
+    width: 100% !important;
 }
 
 a {
     text-decoration: none !important;
     color: navy !important;
+}
+header {
+    margin-bottom: 3vw;
+}
+.navbar {
+    background-color: midnightblue;
+    position: absolute;
+}
+
+.navbar-brand img {
+    height: 2.5vw;
+}
+
+.container {
+    border: solid black 0px;
+    border-radius: 2vw;
+    padding: 2vw;
+}
+.block {
+    color: black;
+    background-color: white;
+    padding: 1.5vw;
+    border-radius: 0.5vw;
+    margin-top: 1vw;
+}
+
+.evaluation .row{
+    margin: 0.5vw 0.5vw 0.5vw 0vw;
+    padding: 0.5vw;
+    background-color: lightgray;
+}
+
+.btn {
+    width: auto;
+    background: rgba(248, 248, 255, 0.7);
+    border-radius: 0.5vw !important;
+}
+
+svg {
+    color: black;
+    width: 2vw;
 }
