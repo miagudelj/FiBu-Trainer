@@ -30,9 +30,16 @@
 <body>
 <header>
     <nav class="navbar fixed-top">
+        <!-- nav brand -->
         <div class="navbar-brand">
             <img src="../img/fibu_logo.png" height="143" width="426"/>
         </div>
+        <!-- search bar -->
+        <form class="search form-inline">
+            <input class="form-control mr-sm-2" id="search-text" type="search" placeholder="Thema">
+            <button class="btn btn-outline-success" id="search-button" type="submit">Suchen</button>
+        </form>
+        <!-- logout -->
         <div class="navbar-nav flex-row ml-md-auto d-md-flex">
             <button type="submit" name="sign out" class="btn" id="logoutButton">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -49,9 +56,11 @@
 <div class="container">
     <h1>Themenblöcke</h1>
     <div class="row">
-        <div class="col-3">
+        <div class="col-4">
             <div class="block">
-                <h3>Stille Reserven</h3>
+                <a href="#">
+                    <h3>Stille Reserven</h3>
+                </a>
                 <div class="evaluation">
                     <div class="row">
                         <div class="col correct">
@@ -66,9 +75,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-4">
             <div class="block">
-                <h3>Stille Reserven</h3>
+                <a href="#">
+                    <h3>Wertschriften</h3>
+                </a>
                 <div class="evaluation">
                     <div class="row">
                         <div class="col correct">
@@ -83,26 +94,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-4">
             <div class="block">
-                <h3>Wertschriften</h3>
-                <div class="evaluation">
-                    <div class="row">
-                        <div class="col correct">
-                            sdfsd
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col solved">
-                            sdfsdf
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="block">
-                <h3>Immobilien</h3>
+                <a href="#">
+                    <h3>Immobilien</h3>
+                </a>
                 <div class="evaluation">
                     <div class="row">
                         <div class="col correct">
@@ -122,7 +118,9 @@
     <div class="row">
         <div class="col-4">
             <div class="block">
-                <h3>AG</h3>
+                <a href="#">
+                    <h3>AG</h3>
+                </a>
                 <div class="evaluation">
                     <div class="row">
                         <div class="col correct">
@@ -139,7 +137,9 @@
         </div>
         <div class="col-4">
             <div class="block">
-                <h3>MWST</h3>
+                <a href="#">
+                    <h3>MWST</h3>
+                </a>
                 <div class="evaluation">
                     <div class="row">
                         <div class="col correct">
@@ -156,7 +156,9 @@
         </div>
         <div class="col-4">
             <div class="block">
-                <h3>BAB</h3>
+                <a href="#">
+                    <h3>BAB</h3>
+                </a>
                 <div class="evaluation">
                     <div class="row">
                         <div class="col correct">

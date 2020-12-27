@@ -7,10 +7,6 @@ html, body {
     box-sizing: content-box;
 }
 
-h1 {
-    font-weight: bold !important;
-}
-
 /* SET FONT SIZE FOR SMALLER DISPLAYS */
 @media screen and (max-width: 900px) {
     html, body {
@@ -22,24 +18,34 @@ h1 {
     }
 }
 
+/* ICON */
+svg {
+    color: black;
+    width: 2vw;
+}
+
 img, video {
-    width: 100% !important;
+    height: 3vw !important;
+    width: 9vw !important;
 }
 
 a {
     text-decoration: none !important;
-    color: navy !important;
+    color: black !important;
 }
+
+h1 {
+    font-weight: bold !important;
+}
+
 header {
     margin-bottom: 3vw;
 }
-.navbar {
-    background-color: midnightblue;
-    position: absolute;
-}
 
-.navbar-brand img {
-    height: 2.5vw;
+/* CLASSES */
+.navbar {
+    background-color: #0B0B3B;
+    position: absolute;
 }
 
 .container {
@@ -47,6 +53,7 @@ header {
     border-radius: 2vw;
     padding: 2vw;
 }
+
 .block {
     color: black;
     background-color: white;
@@ -62,12 +69,17 @@ header {
 }
 
 .btn {
-    width: auto;
-    background: rgba(248, 248, 255, 0.7);
+    background: rgba(255, 255, 255, 0.7) !important;
+    color: black !important;
     border-radius: 0.5vw !important;
 }
 
-svg {
+.search {
+    margin-left: 2vw;
+}
+
+/* ID */
+#search-text {
     color: black;
-    width: 2vw;
+    width: 20vw;
 }
