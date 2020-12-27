@@ -3,7 +3,7 @@ html, body {
     background-color: navy !important;
     margin: 2vw;
     color: white !important;
-    hyphens: auto;
+    hyphens: auto !important;
     box-sizing: content-box;
 }
 
@@ -82,4 +82,10 @@ header {
 #search-text {
     color: black;
     width: 20vw;
+}
+
+#message {
+    font-family: "Copperplate", Fantasy !important;
+    color: red !important;
+    margin-right: 2vw !important;
 }

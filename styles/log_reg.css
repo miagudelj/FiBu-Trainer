@@ -25,24 +25,17 @@ h3 {
     font-weight: bold !important;
 }
 
+#register-link a {
+    padding-left: 1vw;
+}
+
+/* CLASSES */
 .container {
     background-color: white;
     margin-top: 5vw;
     width: 35vw !important;
     border-radius: 1vw;
     background: rgba(248, 248, 255, 0.7);
-}
-
-#login {
-    padding: 3vw;
-}
-
-#login-form {
-    width: 27vw;
-}
-
-#register-link a {
-    padding-left: 1vw;
 }
 
 .form-group {
@@ -54,4 +47,18 @@ h3 {
     color: white !important;
     width: 27vw;
     text-align: center;
+}
+
+/* ID */
+#login {
+    padding: 3vw;
+}
+
+#login-form {
+    width: 27vw;
+}
+
+#message {
+    color: red !important;
+    margin-right: 2vw !important;
 }

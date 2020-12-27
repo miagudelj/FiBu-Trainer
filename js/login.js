@@ -5,6 +5,7 @@
  * @since   2020-12-25
  * @version 1.0
  */
+
 $(document).ready(
     function () {
 
