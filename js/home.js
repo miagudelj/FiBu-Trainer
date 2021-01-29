@@ -67,43 +67,26 @@ function showTheme(themeData) {
 
     $.each(themeData, function (themeUUID, theme) {
 
-        tableData += <div class="col-sm-12 col-md-4">
-        tableData +=     <div class="block">
-        tableData +=     <a href="#">
-        tableData +=         <h3>MWST</h3>
-        tableData +=     </a>
-        tableData +=     <div class="evaluation">
-        tableData +=         <div class="row">
-        tableData +=             <div class="col correct">
-        tableData +=                 sdfsd
-        tableData +=             </div>
-        tableData +=         </div>
-        tableData +=         <div class="row">
-        tableData +=             <div class="col solved">
-        tableData +=                 sdfsdf
-        tableData +=             </div>
-        tableData +=         </div>
-        tableData +=     </div>
-        tableData += </div>
-
-        tableData += `<tr>`;
-        tableData += `<td> ${theme.art}</td>`;
-        tableData += `<td> ${theme.name}</td>`;
-        tableData += `<td> ${theme.geburtsdatum}</td>`;
-        tableData += `<td> ${theme.beine}</td>`;
-        tableData += `<td> ${theme.fell ? "ja" : "nein"}</td>`;
-        tableData += `<td> ${theme.zoo.zoo}</td>`;
-
-        if (Cookies.get("userRole") == "admin") {
-            tableData += "<td><a class='btn' role='button' href='./tieredit.html?themeUUID=" + themeUUID + "'>Bearbeiten</a></td>";
-
-        } else {
-            tableData += "<td><a href='./tieredit.html?themeUUID=" + themeUUID + "'>Ansehen</a></td>";
-
-        }
-        tableData += "</tr>";
+        tableData += `<div class="col-sm-12 col-md-4">`;
+        tableData += `    <div class="block">`;
+        tableData += `    <a href="./unterthemen.html">`;
+        tableData += `        <h3>${theme.name}</h3>`;
+        tableData += `    </a>`;
+        tableData += `    <div class="evaluation">`;
+        tableData += `        <div class="row">`;
+        tableData += `            <div class="col correct">`;
+        tableData += `                <i>${theme.correct} / ${theme.total} richtig gelöst</i>`;
+        tableData += `            </div>`;
+        tableData += `        </div>`;
+        tableData += `        <div class="row">`;
+        tableData += `            <div class="col solved">`;
+        tableData += `                <i>${theme.solved} / ${theme.total} gelöst</i>`;
+        tableData += `            </div>`;
+        tableData += `        </div>`;
+        tableData += `    </div>`;
+        tableData += `</div>`;
     })
-    $("#gehege > tbody").html(tableData);
+    $("#blocks > .list").html(tableData);
 }
 
 
