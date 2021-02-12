@@ -1,5 +1,6 @@
 html, body {
     font-size: 1vw;
+    font-family: "Gadugi" !important;
     background-color: navy !important;
     margin: 2vw;
     color: white !important;
@@ -65,9 +66,10 @@ header {
 .evaluation .row{
     margin: 0.5vw 0.5vw 0.5vw 0vw;
     background-color: lightgray;
+    color: black;
 }
 
-.solved, .correct {
+.solved, .correct, .total {
     content: "";
     padding: 0.5vw;
 }
@@ -79,7 +81,11 @@ header {
     content: "";
     background: seagreen;
 }
-.solved:after, .correct:after {
+.total:after {
+    content: "";
+    background: #D4AF37;
+}
+.solved:after, .correct:after, .total:after {
     opacity: 0.4;
     /*http://jsfiddle.net/pNL8Q/*/
     position: absolute;
@@ -115,6 +121,12 @@ header {
     font-family: "Copperplate", Fantasy !important;
     color: red !important;
     margin-right: 2vw !important;
+}
+
+#backButton {
+    margin-left: -8vw;
+    margin-top: 0.5vw;
+    position: fixed;
 }
 
 
