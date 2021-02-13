@@ -10,18 +10,18 @@
       "themeBlockMap": ""
     }, {
       "status": "student",
-      "name": "Gudelj",
-      "email": "mia.gudelj@student.ksh.ch",
-      "surname": " Mia",
+      "name": "Navarra",
+      "email": "vinicius.navarra@student.ksh.ch",
+      "surname": " Vinicius",
       "username": " miagudelj",
       "password": "123456",
       "themeBlockMap": ""
     },{
       "status": "student",
-      "name": "Gudelj",
-      "email": "mia.gudelj@student.ksh.ch",
-      "surname": " Mia",
-      "username": " miagudelj",
+      "name": "Brodmann",
+      "email": "ciro.brodmann@student.ksh.ch",
+      "surname": " Ciro",
+      "username": " cirobrodmann",
       "password": "123456",
       "themeBlockMap": ""
     }
@@ -32,11 +32,11 @@
       "questionBlockMap": ""
     },
     {
-      "name": "MWST",
+      "name": "Immobilien",
       "questionBlockMap": ""
     },
     {
-      "name": "MWST",
+      "name": "Abschreibungen",
       "questionBlockMap": ""
     }
   ],
@@ -45,7 +45,19 @@
       "solved": "4",
       "correct": "4",
       "name": "dfgdf",
-      "questionMap": "Eminem"
+      "questionMap": ""
+    },
+    {
+      "solved": "4",
+      "correct": "4",
+      "name": "dfgdf",
+      "questionMap": ""
+    },
+    {
+      "solved": "4",
+      "correct": "4",
+      "name": "dfgdf",
+      "questionMap": ""
     }
   ]
 }
