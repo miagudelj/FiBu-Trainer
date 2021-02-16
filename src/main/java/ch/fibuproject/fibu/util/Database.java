@@ -47,7 +47,7 @@ public class Database {
         openConnection();
 
         try {
-            //TODO Create databases if nonexistent
+            //TODO Create databases if nonexistent Ciro
             String sqlCreateMusic = "CREATE TABLE IF NOT EXISTS music (" +
                     "songid INT NOT NULL AUTO_INCREMENT," +
                     "title VARCHAR(45) NULL," +
@@ -130,7 +130,7 @@ public class Database {
     // Retrieving methods from here onwards
     // TODO Create Methods to get data from db
 
-    public static Vector<Song> retrieveAllSongs() {
+    /*public static Vector<Song> retrieveAllSongs() {
 
         String selectStatement = "SELECT * FROM music";
 
@@ -372,7 +372,7 @@ public class Database {
 
         simpleInsert(insertStatement, genre.getName());
 
-        /*try {
+        *//*try {
             Connection conn = getConnection();
             PreparedStatement pstGenre = conn.prepareStatement(insertStatement);
 
@@ -385,7 +385,7 @@ public class Database {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             System.out.println(throwables.getMessage());
-        }*/
+        }*//*
     }
 
     public static void addArtist(Artist artist) throws SQLException{
@@ -394,7 +394,7 @@ public class Database {
                 "VALUES (?)";
 
         simpleInsert(insertStatement, artist.getName());
-        /*try {
+        *//*try {
             Connection conn = getConnection();
             PreparedStatement pstArtist = conn.prepareStatement(isnsertStatement);
 
@@ -406,7 +406,7 @@ public class Database {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             System.out.println(throwables.getMessage());
-        }*/
+        }*//*
     }
 
 
@@ -442,7 +442,7 @@ public class Database {
             }
         }).run();
 
-    }
+    }*/
 
     public static void simpleInsert(String insertStatement, String argument) throws SQLException{
 

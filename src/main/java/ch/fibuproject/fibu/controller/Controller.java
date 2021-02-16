@@ -24,7 +24,7 @@ import java.util.Vector;
 @RestController
 public class Controller {
 
-    @GetMapping("/rest/allsongs")
+    /*@GetMapping("/rest/allsongs")
     public Vector<Song> getAllSongs() {
         Vector<Song> songs = Database.retrieveAllSongs();
 
@@ -182,5 +182,5 @@ public class Controller {
                     HttpStatus.INTERNAL_SERVER_ERROR, "Error when trying to write to DB, genre not saved."
             );
         }
-    }
+    }*/
 }

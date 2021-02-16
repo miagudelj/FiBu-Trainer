@@ -73,7 +73,7 @@ public class Configuration {
 
         //TODO add database
         String contents = "MySQL:\n" +
-                "  database: \n" +
+                "  database: fibudb\n" +
                 "  host: localhost\n" +
                 "  port: 3306\n" +
                 "  username: root\n" +
