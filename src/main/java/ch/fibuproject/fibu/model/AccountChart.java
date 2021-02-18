@@ -7,6 +7,7 @@ import java.util.Vector;
  *
  * AccountChart represents a collection of accounts to use within one exercise group
  */
+
 public class AccountChart {
     private int id;
     private Vector<Account> allAccounts;

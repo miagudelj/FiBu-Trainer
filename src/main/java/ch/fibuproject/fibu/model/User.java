@@ -1,5 +1,11 @@
 package ch.fibuproject.fibu.model;
 
+/**
+ * @author Ciro Brodmann
+ *
+ * Represents a User.
+ */
+
 public class User {
 
     private int id;

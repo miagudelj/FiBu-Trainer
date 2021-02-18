@@ -1,5 +1,13 @@
 package ch.fibuproject.fibu.model;
 
+/**
+ * @author Ciro Brodmann
+ *
+ * A subquestion (The letter part of a question, see JavaDoc of question for a more detailed explanation)
+ * Can be of type "multiple choice" or "book entry".
+ * Use this class if your question is of type "book entry". For type "multiple choice", use MCQuestion.
+ */
+
 public class Subquestion {
 
     private int id;

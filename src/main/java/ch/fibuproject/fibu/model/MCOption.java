@@ -1,5 +1,11 @@
 package ch.fibuproject.fibu.model;
 
+/**
+ * @author Ciro Brodmann
+ *
+ * A multiple-choice option
+ */
+
 public class MCOption {
 
     private int id;

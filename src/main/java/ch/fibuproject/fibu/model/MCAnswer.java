@@ -1,5 +1,11 @@
 package ch.fibuproject.fibu.model;
 
+/**
+ * @author Ciro Brodmann
+ *
+ * A multiple-choice answer and who it belongs to.
+ */
+
 public class MCAnswer {
 
     private int id;

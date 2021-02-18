@@ -2,6 +2,16 @@ package ch.fibuproject.fibu.model;
 
 import java.util.Vector;
 
+/**
+ * @author Ciro Brodmann
+ *
+ * A question. It only contains a general description of a question. Use it to give general circumstances of the
+ * question. For the actual task, create a subquestion object and add it to "subquestions" in this object.
+ *
+ * (This represents a group. For example, you may have a group of tasks to solve, which all have common circumstances
+ * and thus all belong to question 1). This is that 1). The first subquestion would then be a), so in total 1a).)
+ */
+
 public class Question {
 
     private int id;

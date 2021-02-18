@@ -1,5 +1,10 @@
 package ch.fibuproject.fibu.model;
 
+/**
+ * @author Ciro Brodmann
+ *
+ * Represents a book entry (DE: Buchungssatz) and who it belongs to
+ */
 public class BookEntry {
 
     private int id;

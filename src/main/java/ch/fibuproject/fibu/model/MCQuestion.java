@@ -2,6 +2,12 @@ package ch.fibuproject.fibu.model;
 
 import java.util.Vector;
 
+/**
+ * @author Ciro Brodmann
+ *
+ * An extention of Subquestion containing a Vector to store all possible answers to a multiple-choice question.
+ */
+
 public class MCQuestion extends Subquestion {
 
     private Vector<MCOption> options;

@@ -2,6 +2,12 @@ package ch.fibuproject.fibu.model;
 
 import java.util.Vector;
 
+/**
+ * @author Ciro Brodmann
+ *
+ * A group of ExerciseGroups
+ */
+
 public class Subject {
 
     private int id;

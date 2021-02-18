@@ -2,6 +2,11 @@ package ch.fibuproject.fibu.model;
 
 import java.util.Vector;
 
+/**
+ * @author Ciro Brodmann
+ *
+ * This class represents a school class with students.
+ */
 public class Class {
 
     private int id;
