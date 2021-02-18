@@ -76,8 +76,8 @@ public class Configuration {
                 "  database: fibudb\n" +
                 "  host: localhost\n" +
                 "  port: 3306\n" +
-                "  username: root\n" +
-                "  password: \"\"\n" +
+                "  username: fibuuser\n" +
+                "  password: \"password\"\n" +
                 "  poolsize: 100";
 
         fileWriter.write(contents);

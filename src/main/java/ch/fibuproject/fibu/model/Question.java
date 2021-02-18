@@ -1,37 +1,33 @@
 package ch.fibuproject.fibu.model;
 
-import ch.fibuproject.fibu.util.Type;
-
-/**
- * Vinicius
- * 05.Feb 2021
- * Version: 1.0
- * Project description:
- * Holds question information
- */
+import java.util.Vector;
 
 public class Question {
 
-    private Answer answer;
+    private int id;
+    private int number;
     private String text;
-    private Type type;
+    private String disclaimer;
+    private Vector<Subquestion> subquestions;
 
-    public Question(){
-
+    public Question() {
+        this.subquestions = new Vector<>();
     }
 
-    public Question(Answer answer, String text, Type type) {
-        this.answer = answer;
-        this.text = text;
-        this.type = type;
+    public int getId() {
+        return id;
     }
 
-    public Answer getAnswer() {
-        return answer;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public String getText() {
@@ -42,11 +38,23 @@ public class Question {
         this.text = text;
     }
 
-    public Type getType() {
-        return type;
+    public String getDisclaimer() {
+        return disclaimer;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setDisclaimer(String disclaimer) {
+        this.disclaimer = disclaimer;
+    }
+
+    public Vector<Subquestion> getSubquestions() {
+        return subquestions;
+    }
+
+    public Subquestion getSubquestion(int index) {
+        return this.subquestions.get(index);
+    }
+
+    public void setSubquestion(Subquestion subquestion) {
+        this.subquestions.add(subquestion);
     }
 }
