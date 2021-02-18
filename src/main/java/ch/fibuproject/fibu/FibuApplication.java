@@ -1,7 +1,7 @@
 package ch.fibuproject.fibu;
 
 import ch.fibuproject.fibu.util.Configuration;
-import ch.fibuproject.fibu.util.Database;
+import ch.fibuproject.fibu.database.Database;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

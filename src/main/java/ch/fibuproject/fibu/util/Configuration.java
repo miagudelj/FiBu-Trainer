@@ -5,11 +5,10 @@ import com.github.jsixface.YamlConfig;
 import java.io.*;
 
 /**
- * Vinicius
- * 05.Feb 2021
- * Version: 1.0
- * Project description:
- * Configuration class for config.yml this was code given to us by a friend - https://github.com/nighty34
+ * @author Ciro Brodmann
+ * @author Felix Reiniger
+ *
+ * Configuration class for config.yml. Reused from an older project.
  */
 
 public class Configuration {
