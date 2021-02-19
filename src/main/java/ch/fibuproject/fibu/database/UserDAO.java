@@ -24,7 +24,7 @@ public class UserDAO {
     public UserDAO() {
     }
 
-    public User getUser(int id) {
+    public User getUser(String username) {
         User user = null;
         String sqlStatement;
         Map<Integer, Object> values;
@@ -33,10 +33,10 @@ public class UserDAO {
         values = new HashMap<>();
 
         sqlStatement = "SELECT * FROM User" +
-                " WHERE userID = ?";
+                " WHERE username = ?";
 
 
-        values.put(1, id);
+        values.put(1, username);
 
         try {
             results = Database.selectStatement(sqlStatement, values);
