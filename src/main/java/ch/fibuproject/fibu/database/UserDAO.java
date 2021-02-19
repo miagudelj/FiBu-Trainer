@@ -192,18 +192,34 @@ public class UserDAO {
         }
     }
 
+    /**
+     * sets this user's class to NULL ( no class )
+     * @param username the user's username
+     */
+    public void setUserClass(String username) {
+        setUserClass(0, username);
+    }
+
     public void setUserClass(int classID, String username) {
         String query;
         Map<Integer, Object> values;
+        int indexCounter = 1;
 
-        query = "UPDATE USER" +
-                " SET classID = ?" +
-                " WHERE username = ?";
+        query = "UPDATE USER";
 
         values = new HashMap<>();
 
-        values.put(1, classID);
-        values.put(2, username);
+        if (classID > 0) {
+            query = query + " SET classID = ?";
+
+            values.put(indexCounter, classID);
+            indexCounter++;
+        } else {
+            query = query + " SET classID = NULL";
+        }
+
+        query = query + " WHERE username = ?";
+        values.put(indexCounter, username);
 
         try {
             Database.updateStatement(query, values);

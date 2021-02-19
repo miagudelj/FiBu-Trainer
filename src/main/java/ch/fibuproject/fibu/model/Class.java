@@ -37,6 +37,10 @@ public class Class {
         return students;
     }
 
+    public void addStudents(Vector<User> students) {
+        this.students.addAll(students);
+    }
+
     public void addStudent(User student) {
         this.students.add(student);
     }
