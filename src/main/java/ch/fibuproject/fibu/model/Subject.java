@@ -45,4 +45,8 @@ public class Subject {
     public void addExerciseGroup(ExerciseGroup exGroup) {
         this.exerciseGroups.add(exGroup);
     }
+
+    public void addExerciseGroups(Vector<ExerciseGroup> exerciseGroups) {
+        this.exerciseGroups.addAll(exerciseGroups);
+    }
 }

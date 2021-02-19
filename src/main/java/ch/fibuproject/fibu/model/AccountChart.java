@@ -10,6 +10,7 @@ import java.util.Vector;
 
 public class AccountChart {
     private int id;
+    private String name;
     private Vector<Account> allAccounts;
 
     public AccountChart() {
@@ -24,6 +25,14 @@ public class AccountChart {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Vector<Account> getAllAccounts() {
         return allAccounts;
     }
@@ -34,5 +43,9 @@ public class AccountChart {
 
     public void addAccount(Account account) {
         this.allAccounts.add(account);
+    }
+
+    public void addAccounts(Vector<Account> accounts) {
+        this.allAccounts.addAll(accounts);
     }
 }

@@ -49,11 +49,11 @@ public class QuestionDAO {
         return question;
     }
 
-    public Vector<Question> getAllSubquestions() {
-        return this.getAllSubquestions(0);
+    public Vector<Question> getAllQuestions() {
+        return this.getAllQuestions(0);
     }
 
-    public Vector<Question> getAllSubquestions(int exerciseGroupID) {
+    public Vector<Question> getAllQuestions(int exerciseGroupID) {
         String query;
         Vector<Question> questions;
         Map<Integer, Object> values;
@@ -66,7 +66,7 @@ public class QuestionDAO {
 
         try {
             if (exerciseGroupID > 0) {
-                query = query + " WHERE questionID = ?";
+                query = query + " WHERE exerciseGroupID = ?";
                 values.put(1, exerciseGroupID);
                 results = Database.selectStatement(query, values);
             } else {

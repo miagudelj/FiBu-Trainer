@@ -53,15 +53,19 @@ public class ExerciseGroup {
         this.questionAmount = questionAmount;
     }
 
+    public Question getQuestion(int index) {
+        return this.questions.get(index);
+    }
+
     public Vector<Question> getQuestions() {
         return questions;
     }
 
-    public void addQuestion(Question question) {
-        this.questions.add(question);
+    public void addQuestions(Vector<Question> questions) {
+        this.questions.addAll(questions);
     }
 
-    public Question getQuestion(int index) {
-        return this.questions.get(index);
+    public void addQuestion(Question question) {
+        this.questions.add(question);
     }
 }

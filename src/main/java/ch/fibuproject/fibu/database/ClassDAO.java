@@ -96,15 +96,15 @@ public class ClassDAO {
     }
 
     public DBResult newClass(Class newClass) {
-        return this.updateClass(newClass, true);
+        return this.updateStatement(newClass, true);
     }
 
 
     public DBResult updateClass (Class newClass) {
-        return this.updateClass(newClass, false);
+        return this.updateStatement(newClass, false);
     }
 
-    private DBResult updateClass(Class newClass, boolean isNew) {
+    private DBResult updateStatement(Class newClass, boolean isNew) {
         String query;
         Map<Integer, Object> values;
 
