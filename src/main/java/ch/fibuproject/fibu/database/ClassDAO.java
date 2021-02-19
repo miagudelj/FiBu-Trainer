@@ -1,6 +1,7 @@
 package ch.fibuproject.fibu.database;
 
 import ch.fibuproject.fibu.model.Class;
+import ch.fibuproject.fibu.model.DBResult;
 import ch.fibuproject.fibu.model.User;
 
 import java.sql.ResultSet;
@@ -94,15 +95,16 @@ public class ClassDAO {
         return classes;
     }
 
-    public void newClass(Class newClass) {
-        this.updateClass(newClass, true);
+    public DBResult newClass(Class newClass) {
+        return this.updateClass(newClass, true);
     }
 
-    public void updateClass (Class newClass) {
-        this.updateClass(newClass, false);
+
+    public DBResult updateClass (Class newClass) {
+        return this.updateClass(newClass, false);
     }
 
-    private void updateClass(Class newClass, boolean isNew) {
+    private DBResult updateClass(Class newClass, boolean isNew) {
         String query;
         Map<Integer, Object> values;
 
@@ -121,7 +123,7 @@ public class ClassDAO {
         }
 
         try {
-            Database.updateStatement(query, values);
+            return Database.updateStatement(query, values);
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
@@ -132,7 +134,7 @@ public class ClassDAO {
 
     }
 
-    public void deleteClass(int classID) {
+    public DBResult deleteClass(int classID) {
         String query;
         Map<Integer, Object> values;
 
@@ -143,11 +145,13 @@ public class ClassDAO {
         values.put(1, classID);
 
         try {
-            Database.updateStatement(query, values);
+            return Database.updateStatement(query, values);
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
+        } finally {
+            Database.closeStatement();
         }
     }
 

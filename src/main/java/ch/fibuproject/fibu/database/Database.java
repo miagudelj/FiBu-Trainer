@@ -1,5 +1,6 @@
 package ch.fibuproject.fibu.database;
 
+import ch.fibuproject.fibu.model.DBResult;
 import ch.fibuproject.fibu.util.Configuration;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -140,7 +141,7 @@ public class Database {
         return results;
     }
 
-    static synchronized void updateStatement(String query, Map<Integer, Object> values) throws SQLException {
+    static synchronized DBResult updateStatement(String query, Map<Integer, Object> values) throws SQLException {
         Connection conn = null;
 
         try {
@@ -151,6 +152,13 @@ public class Database {
 
             int affectedRows = pst.executeUpdate();
             // TODO insert handling of errors like "no affected rows"
+            if (affectedRows == 0) {
+                return DBResult.NOACTION;
+            } else if (affectedRows > 0) {
+                return DBResult.SUCCESS;
+            } else {
+                return DBResult.ERROR;
+            }
 
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -1,5 +1,6 @@
 package ch.fibuproject.fibu.database;
 
+import ch.fibuproject.fibu.model.DBResult;
 import ch.fibuproject.fibu.model.User;
 import ch.fibuproject.fibu.model.UserType;
 
@@ -108,11 +109,11 @@ public class UserDAO {
         return users;
     }
 
-    public void saveUser(User user) {
-        saveUser(user, 0);
+    public DBResult saveUser(User user) {
+        return saveUser(user, 0);
     }
 
-    public void saveUser(User user, int classID) {
+    public DBResult saveUser(User user, int classID) {
 
         String query;
         Map<Integer, Object> values;
@@ -137,7 +138,7 @@ public class UserDAO {
         }
 
         try {
-            Database.updateStatement(query, values);
+            return Database.updateStatement(query, values);
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
@@ -147,11 +148,11 @@ public class UserDAO {
         }
     }
 
-    public void updateUser(User user) {
-        updateUser(user, 0);
+    public DBResult updateUser(User user) {
+        return updateUser(user, 0);
     }
 
-    public void updateUser(User user, int classID) {
+    public DBResult updateUser(User user, int classID) {
         String query;
         Map<Integer, Object> values;
         int valuesCounter = 1;
@@ -182,7 +183,7 @@ public class UserDAO {
         values.put(valuesCounter, user.getId());
 
         try {
-            Database.updateStatement(query, values);
+            return Database.updateStatement(query, values);
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
@@ -196,11 +197,11 @@ public class UserDAO {
      * sets this user's class to NULL ( no class )
      * @param username the user's username
      */
-    public void setUserClass(String username) {
-        setUserClass(0, username);
+    public DBResult setUserClass(String username) {
+        return setUserClass(0, username);
     }
 
-    public void setUserClass(int classID, String username) {
+    public DBResult setUserClass(int classID, String username) {
         String query;
         Map<Integer, Object> values;
         int indexCounter = 1;
@@ -222,7 +223,7 @@ public class UserDAO {
         values.put(indexCounter, username);
 
         try {
-            Database.updateStatement(query, values);
+            return Database.updateStatement(query, values);
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
@@ -232,7 +233,7 @@ public class UserDAO {
         }
     }
 
-    public void deleteUser(int userID) {
+    public DBResult deleteUser(int userID) {
         String query;
         Map<Integer, Object> values;
 
@@ -244,7 +245,7 @@ public class UserDAO {
         values.put(1, userID);
 
         try {
-            Database.updateStatement(query, values);
+            return Database.updateStatement(query, values);
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
