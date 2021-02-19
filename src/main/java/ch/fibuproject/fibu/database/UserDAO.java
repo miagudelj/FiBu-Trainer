@@ -192,6 +192,30 @@ public class UserDAO {
         }
     }
 
+    public void setUserClass(int classID, String username) {
+        String query;
+        Map<Integer, Object> values;
+
+        query = "UPDATE USER" +
+                " SET classID = ?" +
+                " WHERE username = ?";
+
+        values = new HashMap<>();
+
+        values.put(1, classID);
+        values.put(2, username);
+
+        try {
+            Database.updateStatement(query, values);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println(ex.getMessage());
+            throw new RuntimeException();
+        } finally {
+            Database.closeStatement();
+        }
+    }
+
     public void deleteUser(int userID) {
         String query;
         Map<Integer, Object> values;
