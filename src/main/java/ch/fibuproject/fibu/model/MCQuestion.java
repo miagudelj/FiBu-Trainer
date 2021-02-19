@@ -28,4 +28,8 @@ public class MCQuestion extends Subquestion {
     public void addOption(MCOption option) {
         this.options.add(option);
     }
+
+    public void addOptions(Vector<MCOption> options) {
+        this.options.addAll(options);
+    }
 }

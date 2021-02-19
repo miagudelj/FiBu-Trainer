@@ -64,7 +64,11 @@ public class Question {
         return this.subquestions.get(index);
     }
 
-    public void setSubquestion(Subquestion subquestion) {
+    public void addSubquestion(Subquestion subquestion) {
         this.subquestions.add(subquestion);
+    }
+
+    public void addSubquestions(Vector<Subquestion> subquestions) {
+        this.subquestions.addAll(subquestions);
     }
 }

@@ -73,6 +73,8 @@ public class UserDAO {
 
         sqlStatement = "SELECT * FROM User";
 
+        users = new Vector<>();
+
         try {
             switch (filteroption) {
                 case NOFILTER:
@@ -89,7 +91,6 @@ public class UserDAO {
                     results = Database.selectStatement(sqlStatement, values);
                     break;
             }
-            users = new Vector<>();
 
             while (results.next()) {
                 user = new User();

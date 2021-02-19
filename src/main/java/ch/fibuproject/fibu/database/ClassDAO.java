@@ -68,11 +68,11 @@ public class ClassDAO {
 
         query = "SELECT * FROM Class";
         userDAO = new UserDAO();
+        classes = new Vector<>();
 
         try {
             results = Database.simpleSelect(query);
 
-            classes = new Vector<>();
             while (results.next()) {
                 newClass = new Class();
 
