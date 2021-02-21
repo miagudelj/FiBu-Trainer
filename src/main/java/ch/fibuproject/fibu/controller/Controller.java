@@ -1,17 +1,10 @@
 package ch.fibuproject.fibu.controller;
 
+import ch.fibuproject.fibu.database.UserDAO;
+import ch.fibuproject.fibu.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.sql.SQLException;
-import java.util.Vector;
 
 /**
  * Vinicius
@@ -24,6 +17,23 @@ import java.util.Vector;
 @RestController
 public class Controller {
 
+    @GetMapping("/user/login")
+    public User login(String username) {
+        User user = new UserDAO().getUser(username);
+
+        return user;
+    }
+
+    @GetMapping("/user/logout")
+    public HttpStatus logout() {
+        return HttpStatus.valueOf(200);
+    }
+
+    //TODO talk about mapping with Mia and with Ciro about what to return
+    @GetMapping("/zoo/list")
+    public void listThemes() {
+
+    }
     /*@GetMapping("/rest/allsongs")
     public Vector<Song> getAllSongs() {
         Vector<Song> songs = Database.retrieveAllSongs();

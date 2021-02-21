@@ -34,7 +34,7 @@ $(document).ready(
 function loadThemes() {
 
     $.ajax({
-        url: "./resource/zoo/list",
+        url: "./zoo/list",
         type: "GET",
         dataType: "json"
     })

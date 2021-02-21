@@ -22,7 +22,7 @@ function sendLogin(form) {
     form.preventDefault();
 
     $.ajax({
-        url: "./resource/user/login",
+        url: "./user/login",
         type: "POST",
         dataType: "text",
         data: $("#login-form").serialize()
@@ -53,7 +53,7 @@ function sendLogin(form) {
 function sendLogout() {
 
     $.ajax({
-        url: "./resource/user/logout",
+        url: "./user/logout",
         type: "DELETE",
         dataType: "text"
     })

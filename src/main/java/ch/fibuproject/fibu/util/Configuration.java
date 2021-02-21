@@ -3,6 +3,8 @@ package ch.fibuproject.fibu.util;
 import com.github.jsixface.YamlConfig;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 /**
  * @author Ciro Brodmann
@@ -14,45 +16,45 @@ import java.io.*;
 public class Configuration {
 
     private static YamlConfig config;
-    private static String path = (new File(Configuration.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile().getParentFile().getParentFile().toString() + File.separator + "config.yml").replace("file:", "");
+    private static String path = System.getProperty("user.dir");
+    private static String savedConfig = path + "\\src\\main\\resources\\config.yml";
+    private static String usedConfig = path + "\\..\\config.yml";
 
     /**
      * Initialises configuration
      */
     public static void init() {
-        System.out.println(path);
         createIfNotExists();
 
-        try{
-            InputStream resource = new FileInputStream(path);
+        try {
+            InputStream resource = new FileInputStream(usedConfig);
             System.out.println(resource.available());
             config = YamlConfig.load(resource);
-        }catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
             System.out.println("Config konnte nicht gelesen werden.");
         }
-        //TODO: Replace try catch with throws
+        //TODO: Replace try catch with throw
     }
-
 
     /**
      * Creates config.yml if it doesn't exist
      */
     public static void createIfNotExists() {
 
-        File configFile = new File(path);
+        File configFile = new File(usedConfig);
 
         if (!configFile.exists()) {
             try {
                 configFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("The file could not be created at " + path);
+                System.out.println("The file could not be created at " + usedConfig);
             }
         }
 
         try {
-            writeStandardConfig(configFile);
+            writeStandardConfig();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Could not write standard config information to config file");
@@ -61,26 +63,12 @@ public class Configuration {
 
     /**
      * Writes standardconfig
-     * @param configFile config File
      * @throws IOException
      */
 
     //TODO: Change method to copy default config instead of writing it via code.
-    private static void writeStandardConfig(File configFile) throws IOException {
-
-        FileWriter fileWriter = new FileWriter(configFile);
-
-        //TODO add database
-        String contents = "MySQL:\n" +
-                "  database: fibudb\n" +
-                "  host: localhost\n" +
-                "  port: 3306\n" +
-                "  username: fibuuser\n" +
-                "  password: \"password\"\n" +
-                "  poolsize: 100";
-
-        fileWriter.write(contents);
-        fileWriter.close();
+    private static void writeStandardConfig() throws IOException {
+        Files.copy(new File(savedConfig).toPath(), new File(usedConfig).toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
 
