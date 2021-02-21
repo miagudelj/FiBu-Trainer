@@ -62,7 +62,7 @@ function sendLogout() {
          * Request success
          */
         .done(function (jsonData) {
-            window.location.href = "../../../../../index.html"
+            window.location.href = "../index.html"
         })
 
         /**

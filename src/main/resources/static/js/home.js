@@ -34,7 +34,7 @@ $(document).ready(
 function loadThemes() {
 
     $.ajax({
-        url: "./zoo/list",
+        url: "./themeblock/list",
         type: "GET",
         dataType: "json"
     })
@@ -65,22 +65,22 @@ function showTheme(themeData) {
 
     var tableData = "";
 
-    $.each(themeData, function (themeUUID, theme) {
+    $.each(themeData, function (themeblock) {
 
         tableData += `<div class="col-sm-12 col-md-4">`;
         tableData += `    <div class="block">`;
         tableData += `    <a href="./unterthemen.html">`;
-        tableData += `        <h3>${theme.name}</h3>`;
+        tableData += `        <h3>${themeblock.name}</h3>`;
         tableData += `    </a>`;
         tableData += `    <div class="evaluation">`;
         tableData += `        <div class="row">`;
         tableData += `            <div class="col correct">`;
-        tableData += `                <i>${theme.correct} / ${theme.total} richtig gelöst</i>`;
+        tableData += `                <i>${themeblock.questionblock.correct} / ${themeblock.questionblock.total} richtig gelöst</i>`;//TODO total questions in java
         tableData += `            </div>`;
         tableData += `        </div>`;
         tableData += `        <div class="row">`;
         tableData += `            <div class="col solved">`;
-        tableData += `                <i>${theme.solved} / ${theme.total} gelöst</i>`;
+        tableData += `                <i>${themeblock.questionblock.solved} / ${themeblock.questionblock.total} gelöst</i>`; //TODO total questions in java
         tableData += `            </div>`;
         tableData += `        </div>`;
         tableData += `    </div>`;
