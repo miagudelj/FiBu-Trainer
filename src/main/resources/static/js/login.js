@@ -59,7 +59,7 @@ function sendLogout() {
 
     $.ajax({
         url: "/user/logout",
-        type: "DELETE",
+        type: "GET",
         dataType: "text"
     })
 
