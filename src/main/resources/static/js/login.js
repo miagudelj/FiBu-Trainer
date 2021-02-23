@@ -19,12 +19,12 @@ $(document).ready(
  * @param form
  */
 function sendLogin(form) {
+
     form.preventDefault();
 
     $.ajax({
-        url: "./user/login",
+        url: "/user/login",
         type: "POST",
-        dataType: "text",
         data: $("#login-form").serialize()
     })
 
@@ -53,7 +53,7 @@ function sendLogin(form) {
 function sendLogout() {
 
     $.ajax({
-        url: "./user/logout",
+        url: "/user/logout",
         type: "DELETE",
         dataType: "text"
     })

@@ -53,7 +53,6 @@ public class Database {
      */
     public static void init(){
         openConnection();
-
         // Note: Due to the size of the current database it no longer generates out of this program. You will have to use
         // an sql dump file and insert it into MySQLWorkbench or PHPMyAdmin.
     }

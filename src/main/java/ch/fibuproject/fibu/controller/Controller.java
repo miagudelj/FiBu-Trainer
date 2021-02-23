@@ -3,8 +3,11 @@ package ch.fibuproject.fibu.controller;
 import ch.fibuproject.fibu.database.UserDAO;
 import ch.fibuproject.fibu.model.User;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Vinicius
@@ -15,13 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+
 public class Controller {
 
-    @GetMapping("/user/login")
-    public User login(String username) {
-        User user = new UserDAO().getUser(username);
-
-        return user;
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean login(HttpServletRequest request) {
+        System.out.println(request.getParameter("username"));
+        System.out.println(request.getParameter("password"));
+        return true;
     }
 
     @GetMapping("/user/logout")
