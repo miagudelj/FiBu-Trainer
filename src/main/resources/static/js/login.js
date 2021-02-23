@@ -26,7 +26,7 @@ function sendLogin(form) {
         password : $(password).val()
     }
     $.ajax({
-        url: window.location+"user/login",
+        url: window.location.origin+"/user/login",
         contentType : "application/json",
         type: "POST",
         dataType: 'json',
