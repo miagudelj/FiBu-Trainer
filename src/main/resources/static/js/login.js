@@ -22,8 +22,8 @@ function sendLogin(form) {
 
     form.preventDefault();
     var formData = {
-        username : $(username).val(),
-        password : $(password).val()
+        username : $("#username").val(),
+        password : $("#password").val()
     }
     $.ajax({
         url: window.location.origin+"/user/login",
