@@ -21,12 +21,18 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Controller {
 
-    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST, consumes="application/json")
     @ResponseBody
-    public boolean login(HttpServletRequest request) {
-        System.out.println(request.getParameter("username"));
-        System.out.println(request.getParameter("password"));
-        return true;
+    public User login(@RequestBody User requestUser) {
+        System.out.println(requestUser.getUsername());
+       // User dbUser = new UserDAO().getUser(requestUser.getUsername());
+        //String pwdCheck = dbUser.getPasswordHash();
+//        if (pwdCheck.equals(requestUser.getPassword())) {
+//            return dbUser;
+//        } else {
+//            return null;
+//        }
+        return requestUser;
     }
 
     @GetMapping("/user/logout")

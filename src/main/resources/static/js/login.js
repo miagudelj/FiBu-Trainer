@@ -6,7 +6,7 @@
  * @version 1.0
  */
 
-$(document).ready(
+$( document ).ready(
     function () {
 
         $("#login-form").submit(sendLogin);
@@ -21,11 +21,16 @@ $(document).ready(
 function sendLogin(form) {
 
     form.preventDefault();
-
+    var formData = {
+        username : $(username).val(),
+        password : $(password).val()
+    }
     $.ajax({
-        url: "/user/login",
+        url: window.location+"user/login",
+        contentType : "application/json",
         type: "POST",
-        data: $("#login-form").serialize()
+        dataType: 'json',
+        data: JSON.stringify(formData)
     })
 
         /**

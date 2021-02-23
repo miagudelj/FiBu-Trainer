@@ -15,10 +15,11 @@ import java.nio.file.StandardCopyOption;
 
 public class Configuration {
 
+    private static String seperator = File.separator;
     private static YamlConfig config;
     private static String path = System.getProperty("user.dir");
-    private static String savedConfig = path + "\\src\\main\\resources\\config.yml";
-    private static String usedConfig = path + "\\..\\config.yml";
+    private static String savedConfig = path + seperator + "src" + seperator + "main" + seperator + "resources" + seperator + "config.yml";
+    private static String usedConfig = path + seperator + ".." + seperator + "config.yml";
 
     /**
      * Initialises configuration
