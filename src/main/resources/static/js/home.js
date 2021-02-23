@@ -12,6 +12,11 @@
  */
 $(document).ready(
     function () {
+
+        if (Cookies.get("userRole") == "admin") {
+            showUsersButton();
+        } else {
+        }
         loadThemes();
 
         /**
@@ -46,7 +51,7 @@ function loadThemes() {
                 window.location.href("../index.html");
             } else if (xhr.status == 404) {
                 $("#message").text("keine Themen vorhanden");
-            }else {
+            } else {
                 $("#message").text("Fehler beim Lesen der Themen");
             }
         })
@@ -61,7 +66,7 @@ function loadThemes() {
 function showTheme(themeData) {
 
     $("#message").empty();
-    $("#blocks > .list").html("");
+    $("#block > .list").html("");
 
     var tableData = "";
 
@@ -86,7 +91,19 @@ function showTheme(themeData) {
         tableData += `    </div>`;
         tableData += `</div>`;
     })
-    $("#blocks > .list").html(tableData);
+    $("#block > .list").html(tableData);
+}
+
+function showUsersButton() {
+
+    $("#userverwaltung").html("");
+
+    var tableData = "";
+    tableData += `<a class="nav-link" href="userverwaltung.html">Benutzer</a>`;
+
+    $("#userverwaltung").html(tableData)
+    $(".nav-link").attr("style", "color: white !important");
+    $("#userverwaltung").attr("style", "margin-left: 2vw !important");
 }
 
 
