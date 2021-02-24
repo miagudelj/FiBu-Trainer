@@ -66,7 +66,7 @@ function loadThemes() {
  */
 function showTheme(themeData) {
 
-    $("#block > .list").html("");
+    $(".list").html("");
 
     var tableData = "";
 
@@ -91,7 +91,7 @@ function showTheme(themeData) {
         tableData += `    </div>`;
         tableData += `</div>`;
     })
-    $("#block > .list").html(tableData);
+    $(".list").html(tableData);
 }
 
 function showUsersButton() {
