@@ -13,10 +13,11 @@
 $(document).ready(
     function () {
 
-        if (Cookies.get("userRole") == "admin") {
+       /* if (Cookies.get("userRole") == "admin") {
             showUsersButton();
         } else {
-        }
+            showUsersButton();
+        }*/
         loadThemes();
 
         /**
@@ -50,9 +51,9 @@ function loadThemes() {
             if (xhr.status == 403) {
                 window.location.href("../index.html");
             } else if (xhr.status == 404) {
-                $("#message").text("keine Themen vorhanden");
+                alert("keine Themen vorhanden");
             } else {
-                $("#message").text("Fehler beim Lesen der Themen");
+                alert("Fehler beim Lesen der Themen");
             }
         })
 }
@@ -65,7 +66,6 @@ function loadThemes() {
  */
 function showTheme(themeData) {
 
-    $("#message").empty();
     $("#block > .list").html("");
 
     var tableData = "";

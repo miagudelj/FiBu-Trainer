@@ -63,39 +63,9 @@ header {
     margin-top: 1vw;
 }
 
-.evaluation .row{
-    margin: 0.5vw 0.5vw 0.5vw 0vw;
-    background-color: lightgray;
-    color: black;
-}
-
-.solved, .correct, .total {
-    content: "";
-    padding: 0.5vw;
-}
-.solved:after {
-    content: "";
-    background: navy;
-}
-.correct:after {
-    content: "";
-    background: seagreen;
-}
-.total:after {
-    content: "";
-    background: #D4AF37;
-}
-.solved:after, .correct:after, .total:after {
-    opacity: 0.4;
-    /*http://jsfiddle.net/pNL8Q/*/
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 50%;
-    -webkit-animation: filler 1s ease-in-out;
-    -moz-animation: filler 1s ease-in-out;
-    animation: filler 1s ease-in-out;
+.block .row .col-2{
+    padding: 0vw !important;
+    margin: 0vw !important;
 }
 
 .btn {
@@ -111,17 +81,45 @@ header {
     margin-left: 2vw;
 }
 
+/* modal window */
+.modal {
+    background: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+    color: #0B0B3B;
+    background-color: #b0acdc !important;
+    margin-top: 15vw !important;
+    padding: 2vw !important;
+    border-radius: 1vw !important;
+}
+.modal-footer, .modal-header {
+    border: none !important;
+    display: unset; !important;
+}
+.modal-footer > .btn {
+    color: white !important;
+    margin-right: 0.5vw !important;
+    padding: 0.5vw 4vw 0.5vw 4vw !important;
+}
+.btn-primary {
+    background-color: #0B0B3B !important;
+}
+.btn-secondary {
+    background: rgba(0, 0, 0, 0.8) !important;
+}
+/* end modal window */
+
 /* ID */
 #search-text {
     color: black;
     width: 20vw;
 }
-
+/* TODO delete this if not used
 #message {
     font-family: "Copperplate", Fantasy !important;
     color: red !important;
     margin-right: 2vw !important;
-}
+}*/
 
 #backButton {
     margin-left: -8vw;
@@ -129,19 +127,11 @@ header {
     position: fixed;
 }
 
-
-@-webkit-keyframes filler {
-    0% {
-        width: 0;
-    }
+#newClass, #allUsers {
+    color: #0B0B3B !important;
+    margin: 1vw 0vw 1vw 0vw;
+    padding: 0.2vw 0.5vw 0.2vw 0.5vw !important;
 }
-@-moz-keyframes filler {
-    0% {
-        width: 0;
-    }
-}
-@keyframes filler {
-    0% {
-        width: 0;
-    }
+#newClass:hover, #allUsers:hover {
+    background-color: white !important;
 }

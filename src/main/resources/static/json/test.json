@@ -1,29 +1,23 @@
 {
   "User": [
     {
-      "status": "student",
-      "name": "Gudelj",
-      "email": "mia.gudelj@student.ksh.ch",
-      "surname": " Mia",
+      "id": "2",
       "username": " miagudelj",
       "password": "123456",
-      "themeBlockMap": ""
+      "passwordHash": "123456",
+      "type": "USER"
     }, {
-      "status": "student",
-      "name": "Navarra",
-      "email": "vinicius.navarra@student.ksh.ch",
-      "surname": " Vinicius",
+      "id": "3",
       "username": " miagudelj",
       "password": "123456",
-      "themeBlockMap": ""
+      "passwordHash": "123456",
+      "type": "USER"
     },{
-      "status": "student",
-      "name": "Brodmann",
-      "email": "ciro.brodmann@student.ksh.ch",
-      "surname": " Ciro",
+      "id": "4",
       "username": " cirobrodmann",
       "password": "123456",
-      "themeBlockMap": ""
+      "passwordHash": "123456",
+      "type": "USER"
     }
   ],
   "ThemeBlock": [

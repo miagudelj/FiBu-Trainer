@@ -74,6 +74,6 @@ function sendLogout() {
          * Request failed
          */
         .fail(function (xhr, status, errorThrown) {
-            $("#message").text("Es ist ein Fehler aufgetreten");
+            alert("Es ist ein Fehler aufgetreten");
         })
 }
