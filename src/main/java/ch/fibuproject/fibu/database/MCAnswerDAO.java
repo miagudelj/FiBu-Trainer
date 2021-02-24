@@ -14,7 +14,9 @@ import java.util.Vector;
  *
  * DAO class for MCAnswer
  *
- * DO NOT USE YET. THERE ARE THINGS THAT DON'T YET MAKE SENSE AND THAT I HAVE TO FIGURE OUT.
+ * // DO NOT USE YET. THERE ARE THINGS THAT DON'T YET MAKE SENSE AND THAT I HAVE TO FIGURE OUT.
+ * Right, so, at least the important one in getMCAnswer should be resolved. I can't guarantee yet, though, that it'll
+ * work. If there's any issue, please don't hesitate to contact me.
  */
 
 public class MCAnswerDAO {
@@ -25,20 +27,25 @@ public class MCAnswerDAO {
     public MCAnswerDAO() {
     }
 
-    public MCAnswer getMCAnswer(int mcOptionID, int userID) {
+    public MCAnswer getMCAnswer(int subquestionID, int userID) {
         String query;
         Map<Integer, Object> values;
         ResultSet results = null;
         DBQueryAnswer answer = null;
         MCAnswer mcAnswer = null;
 
-        query = "SELECT * FROM MCAnswer" +
-                " WHERE mcOptionID = ?" +
-                " AND userID = ?";
+        query = "SELECT mco.mcOptionID AS mcOptionID, mca.userID AS userID, mca.mcAnswerID AS mcAnswerID" +
+                " FROM MCOption AS mco" +
+                " LEFT JOIN MCAnswer AS mca" +
+                " ON mco.mcOptionID = mca.mcOptionID" +
+                " LEFT JOIN Subquestion AS sq" +
+                " ON mco.subquestionID = sq.subquestionID" +
+                " WHERE sq.subquestionID = ?" +
+                " AND mca.userID = ?"; // Needs to be tested.
 
         values = new HashMap<>();
 
-        values.put(1, mcOptionID);
+        values.put(1, subquestionID);
         values.put(2, userID);
 
         try {
