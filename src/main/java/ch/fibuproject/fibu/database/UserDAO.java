@@ -30,6 +30,7 @@ public class UserDAO {
         String sqlStatement;
         Map<Integer, Object> values;
         ResultSet results;
+        DBQueryAnswer answer = null;
 
         values = new HashMap<>();
 
@@ -40,7 +41,9 @@ public class UserDAO {
         values.put(1, username);
 
         try {
-            results = Database.selectStatement(sqlStatement, values);
+            answer = Database.selectStatement(sqlStatement, values);
+
+            results = answer.getResults();
 
             user = new User();
 
@@ -53,7 +56,7 @@ public class UserDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return user;
@@ -69,6 +72,7 @@ public class UserDAO {
         String sqlStatement;
         Map<Integer, Object> values;
         ResultSet results = null;
+        DBQueryAnswer answer = null;
         values = new HashMap<>();
 
         sqlStatement = "SELECT * FROM User";
@@ -78,19 +82,21 @@ public class UserDAO {
         try {
             switch (filteroption) {
                 case NOFILTER:
-                    results = Database.simpleSelect(sqlStatement);
+                    answer = Database.simpleSelect(sqlStatement);
                     break;
                 case FILTERBYCLASSID:
                     sqlStatement = sqlStatement + " WHERE classID = ?";
                     values.put(1, id);
-                    results = Database.selectStatement(sqlStatement, values);
+                    answer = Database.selectStatement(sqlStatement, values);
                     break;
                 case FILTERBYTYPEID:
                     sqlStatement = sqlStatement + " WHERE typeID = ?";
                     values.put(1, id);
-                    results = Database.selectStatement(sqlStatement, values);
+                    answer = Database.selectStatement(sqlStatement, values);
                     break;
             }
+
+            results = answer.getResults();
 
             while (results.next()) {
                 user = new User();
@@ -104,7 +110,7 @@ public class UserDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return users;
@@ -144,8 +150,6 @@ public class UserDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -189,8 +193,6 @@ public class UserDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -198,7 +200,7 @@ public class UserDAO {
      * sets this user's class to NULL ( no class )
      * @param username the user's username
      */
-    public DBResult setUserClass(String username) {
+    public DBResult resetUserClass(String username) {
         return setUserClass(0, username);
     }
 
@@ -229,8 +231,6 @@ public class UserDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -251,8 +251,6 @@ public class UserDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 

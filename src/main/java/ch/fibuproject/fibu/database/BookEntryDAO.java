@@ -26,7 +26,8 @@ public class BookEntryDAO {
     public BookEntry getBookEntry(int subquestionID, int userID) {
         String query;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         BookEntry bookEntry = null;
 
         query = "SELECT * FROM BookEntry" +
@@ -39,7 +40,9 @@ public class BookEntryDAO {
         values.put(2, userID);
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
 
             if (results.next()) {
                 bookEntry = this.setValues(results);
@@ -49,7 +52,7 @@ public class BookEntryDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return bookEntry;
@@ -64,7 +67,8 @@ public class BookEntryDAO {
         String query;
         Vector<BookEntry> bookEntries;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         BookEntry bookEntry;
 
         values = new HashMap<>();
@@ -76,16 +80,18 @@ public class BookEntryDAO {
             switch (filter) {
                 case FILTERBYSUBQUESTIONID:
                     query = query + " WHERE subquestionID = ?";
-                    results = Database.selectStatement(query, values);
+                    answer = Database.selectStatement(query, values);
                     break;
                 case FILTERBYUSERID:
                     query = query + " WHERE userID = ?";
-                    results = Database.selectStatement(query, values);
+                    answer = Database.selectStatement(query, values);
                     break;
                 default:
-                    results = Database.simpleSelect(query);
+                    answer = Database.simpleSelect(query);
                     break;
             }
+
+            results = answer.getResults();
 
             while (results.next()) {
                 bookEntry = this.setValues(results);
@@ -98,7 +104,7 @@ public class BookEntryDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return bookEntries;
@@ -108,7 +114,8 @@ public class BookEntryDAO {
         String query, middlePart;
         int bookEntryID = 0;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         middlePart = " SET accountSoll = ?," +
                 " accountHaben = ?," +
                 " amount = ?," +
@@ -126,7 +133,9 @@ public class BookEntryDAO {
         values.put(2, bookEntry.getUserID());
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
 
             if (results.next()) {
                 bookEntryID = results.getInt("bookEntryID");
@@ -136,7 +145,7 @@ public class BookEntryDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         values.clear();
@@ -161,8 +170,6 @@ public class BookEntryDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -185,8 +192,6 @@ public class BookEntryDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 

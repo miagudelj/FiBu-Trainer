@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * @author Ciro Brodmann
@@ -102,28 +101,34 @@ public class Database {
     // Retrieving methods from here onwards
     // TODO Create Methods to get data from db
 
-    static synchronized ResultSet simpleSelect(String query) throws SQLException {
-        Connection conn = null;
+    static synchronized DBQueryAnswer simpleSelect(String query) throws SQLException {
+        DBQueryAnswer answer = new DBQueryAnswer();
 
         try {
+            /*
             conn = getConnection();
             pst = conn.prepareStatement(query);
 
             results = pst.executeQuery();
+
+             */
+            answer.setConn(getConnection());
+            answer.setPst(answer.getConn().prepareStatement(query));
+
+            answer.setResults(answer.getPst().executeQuery());
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw ex;
-        } finally {
-            connectionClose(conn);
         }
 
-        return results;
+        return answer;
     }
 
-    static synchronized ResultSet selectStatement(String query, Map<Integer, Object> values) throws SQLException{
-        Connection conn = null;
+    static synchronized DBQueryAnswer selectStatement(String query, Map<Integer, Object> values) throws SQLException {
+        DBQueryAnswer answer = new DBQueryAnswer();
 
         try {
+            /*
             conn = getConnection();
             pst = conn.prepareStatement(query);
 
@@ -131,25 +136,40 @@ public class Database {
 
             results = pst.executeQuery();
 
+             */
+
+            answer.setConn(getConnection());
+            answer.setPst(answer.getConn().prepareStatement(query));
+
+            setValues(values, answer.getPst());
+
+            answer.setResults(answer.getPst().executeQuery());
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw ex;
-        } finally {
-            connectionClose(conn);
         }
-        return results;
+        return answer;
     }
 
     static synchronized DBResult updateStatement(String query, Map<Integer, Object> values) throws SQLException {
-        Connection conn = null;
+        DBQueryAnswer answer = new DBQueryAnswer();
 
         try {
+            /*
             conn = getConnection();
             pst = conn.prepareStatement(query);
 
             setValues(values);
 
-            int affectedRows = pst.executeUpdate();
+             */
+
+            answer.setConn(getConnection());
+            answer.setPst(answer.getConn().prepareStatement(query));
+
+            setValues(values, answer.getPst());
+
+            int affectedRows = answer.getPst().executeUpdate();
             // TODO insert handling of errors like "no affected rows"
             if (affectedRows == 0) {
                 return DBResult.NOACTION;
@@ -163,12 +183,12 @@ public class Database {
             ex.printStackTrace();
             throw ex;
         } finally {
-            connectionClose(conn);
+            closeStatement(answer);
         }
 
     }
 
-    private static void setValues(Map<Integer, Object> values) throws SQLException{
+    private static void setValues(Map<Integer, Object> values, PreparedStatement pst) throws SQLException{
         for (int i = 1; values.containsKey(i); i++) {
             if (values.get(i) == null) {
                 pst.setString(i, null); // unproblematic, as int / double default to 0, not null when not initialised
@@ -183,6 +203,7 @@ public class Database {
         }
     }
 
+    /*
     // this may not be used.
     public static void simpleInsert(String insertStatement, String argument) throws SQLException{
 
@@ -195,22 +216,18 @@ public class Database {
 
             pst.execute();
         } finally {
-            connectionClose(conn);
+            closeStatement(conn);
         }
 
     }
 
+     */
 
 
-    public static void closeStatement(){
-        if (pst != null) {
-            try {
-                pst.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-            }
-        }
+
+    /*
+    public static void closeResultSet(ResultSet results){
+
 
         if (results != null) {
             try {
@@ -224,7 +241,9 @@ public class Database {
         }
     }
 
-    private static void connectionClose(Connection conn) {
+     */
+
+    private static void closeStatement(Connection conn) {
         if (conn != null) {
             try {
                 conn.close();
@@ -233,5 +252,53 @@ public class Database {
                 System.out.println(e.getMessage());
             }
         }
+
+        if (pst != null) {
+            try {
+                pst.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public static void closeStatement(DBQueryAnswer answer) {
+        if (answer != null) {
+
+            ResultSet results = answer.getResults();
+            PreparedStatement pst = answer.getPst();
+            Connection conn = answer.getConn();
+
+            if (results != null) {
+                try {
+                    results.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println(e.getMessage());
+                } finally {
+                    results = null;
+                }
+            }
+
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println(e.getMessage());
+                }
+            }
+
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+
     }
 }

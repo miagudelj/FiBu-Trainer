@@ -1,7 +1,6 @@
 package ch.fibuproject.fibu.database;
 
 import ch.fibuproject.fibu.model.DBResult;
-import ch.fibuproject.fibu.model.ExerciseGroup;
 import ch.fibuproject.fibu.model.Subject;
 
 import java.sql.ResultSet;
@@ -25,6 +24,7 @@ public class SubjectDAO {
         String query;
         Map<Integer, Object> values;
         ResultSet results;
+        DBQueryAnswer answer = null;
         Subject subject = null;
 
         query = "SELECT * FROM Subject" +
@@ -35,7 +35,9 @@ public class SubjectDAO {
         values.put(1, id);
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
 
             if (results.next()) {
                 subject = this.setValues(results);
@@ -45,7 +47,7 @@ public class SubjectDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return subject;
@@ -55,13 +57,16 @@ public class SubjectDAO {
         String query;
         Vector<Subject> subjects;
         ResultSet results;
+        DBQueryAnswer answer = null;
         Subject subject;
 
         subjects = new Vector<>();
         query = "SELECT * FROM Subject";
 
         try {
-            results = Database.simpleSelect(query);
+            answer = Database.simpleSelect(query);
+
+            results = answer.getResults();
 
             while (results.next()) {
                 subject = this.setValues(results);
@@ -74,7 +79,7 @@ public class SubjectDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return subjects;
@@ -112,8 +117,6 @@ public class SubjectDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -134,8 +137,6 @@ public class SubjectDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 

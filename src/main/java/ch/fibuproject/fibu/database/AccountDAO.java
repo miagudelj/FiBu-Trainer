@@ -21,7 +21,8 @@ public class AccountDAO {
     public Account getAccount(int id) {
         String query;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         Account account = null;
 
         query = "SELECT * FROM Account" +
@@ -32,7 +33,8 @@ public class AccountDAO {
         values.put(1, id);
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+            results = answer.getResults();
 
             if (results.next()) {
                 account = this.setValues(results);
@@ -42,7 +44,7 @@ public class AccountDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return account;
@@ -56,7 +58,8 @@ public class AccountDAO {
         String query;
         Vector<Account> accounts;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         Account account;
 
         values = new HashMap<>();
@@ -67,10 +70,12 @@ public class AccountDAO {
             if (accountChartID > 0) {
                 query = query + " WHERE accountChartID = ?";
                 values.put(1, accountChartID);
-                results = Database.selectStatement(query, values);
+                answer = Database.selectStatement(query, values);
             } else {
-                results = Database.simpleSelect(query);
+                answer = Database.simpleSelect(query);
             }
+
+            results = answer.getResults();
 
             while (results.next()) {
                 account = this.setValues(results);
@@ -83,7 +88,7 @@ public class AccountDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return accounts;
@@ -125,8 +130,6 @@ public class AccountDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -147,8 +150,6 @@ public class AccountDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 

@@ -25,7 +25,8 @@ public class ClassDAO {
         String query;
         Class newClass = null;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         Vector<User> students;
         UserDAO userDAO = new UserDAO();
 
@@ -37,7 +38,9 @@ public class ClassDAO {
         values.put(1, classID);
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
             if (results.next()) {
                 newClass = new Class();
 
@@ -52,7 +55,7 @@ public class ClassDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return newClass;
@@ -60,7 +63,8 @@ public class ClassDAO {
 
     public Vector<Class> retrieveAllClasses() {
         String query;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         UserDAO userDAO;
         Vector<User> students;
         Vector<Class> classes = null;
@@ -71,7 +75,9 @@ public class ClassDAO {
         classes = new Vector<>();
 
         try {
-            results = Database.simpleSelect(query);
+            answer = Database.simpleSelect(query);
+
+            results = answer.getResults();
 
             while (results.next()) {
                 newClass = new Class();
@@ -89,7 +95,7 @@ public class ClassDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return classes;
@@ -128,8 +134,6 @@ public class ClassDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
 
     }
@@ -150,8 +154,6 @@ public class ClassDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 

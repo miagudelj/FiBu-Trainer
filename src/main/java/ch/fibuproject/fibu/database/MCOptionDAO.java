@@ -22,7 +22,8 @@ public class MCOptionDAO {
 
     public MCOption getMCOption(int id) {
         String query;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         MCOption option = null;
         Map<Integer, Object> values;
 
@@ -34,7 +35,9 @@ public class MCOptionDAO {
         values.put(1, id);
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
 
             if (results.next()) {
                 option = new MCOption();
@@ -46,7 +49,7 @@ public class MCOptionDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return option;
@@ -60,7 +63,8 @@ public class MCOptionDAO {
         String query;
         Vector<MCOption> options;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         MCOption option;
 
         query = "SELECT * FROM MCOption";
@@ -72,10 +76,12 @@ public class MCOptionDAO {
             if (subquestionID > 0) {
                 query = query + " WHERE subquestionID = ?";
                 values.put(1, subquestionID);
-                results = Database.selectStatement(query, values);
+                answer = Database.selectStatement(query, values);
             } else {
-                results = Database.simpleSelect(query);
+                answer = Database.simpleSelect(query);
             }
+
+            results = answer.getResults();
 
             while (results.next()) {
                 option = new MCOption();
@@ -89,7 +95,7 @@ public class MCOptionDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return options;
@@ -132,8 +138,6 @@ public class MCOptionDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -154,8 +158,6 @@ public class MCOptionDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
