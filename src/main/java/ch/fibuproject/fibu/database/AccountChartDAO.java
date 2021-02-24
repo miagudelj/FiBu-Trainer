@@ -2,7 +2,6 @@ package ch.fibuproject.fibu.database;
 
 import ch.fibuproject.fibu.model.AccountChart;
 import ch.fibuproject.fibu.model.DBResult;
-import ch.fibuproject.fibu.model.Question;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +23,8 @@ public class AccountChartDAO {
     public AccountChart getAccountChart(int id) {
         String query;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         AccountChart accountChart = null;
 
         query = "SELECT * FROM AccountChart" +
@@ -35,7 +35,9 @@ public class AccountChartDAO {
         values.put(1, id);
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+            
+            results = answer.getResults();
 
             if (results.next()) {
                 accountChart = this.setValues(results);
@@ -45,7 +47,7 @@ public class AccountChartDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return accountChart;
@@ -56,7 +58,8 @@ public class AccountChartDAO {
         String query;
         Vector<AccountChart> accountCharts;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         AccountChart accountChart;
 
         values = new HashMap<>();
@@ -64,7 +67,9 @@ public class AccountChartDAO {
         query = "SELECT * FROM AccountChart";
 
         try {
-            results = Database.simpleSelect(query);
+            answer = Database.simpleSelect(query);
+            
+            results = answer.getResults();
 
             while (results.next()) {
                 accountChart = this.setValues(results);
@@ -77,7 +82,7 @@ public class AccountChartDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return accountCharts;
@@ -115,8 +120,6 @@ public class AccountChartDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -137,8 +140,6 @@ public class AccountChartDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 

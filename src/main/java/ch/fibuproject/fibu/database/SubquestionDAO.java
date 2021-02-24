@@ -26,6 +26,7 @@ public class SubquestionDAO {
         String query;
         Map<Integer, Object> values;
         ResultSet results;
+        DBQueryAnswer answer = null;
         Subquestion subquestion = null;
 
         query = "SELECT * FROM Subquestion" +
@@ -36,7 +37,9 @@ public class SubquestionDAO {
         values.put(1, id);
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
 
             if (results.next()) {
                 subquestion = this.setValues(results);
@@ -46,7 +49,7 @@ public class SubquestionDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return subquestion;
@@ -61,6 +64,7 @@ public class SubquestionDAO {
         Vector<Subquestion> subquestions;
         Map<Integer, Object> values;
         ResultSet results;
+        DBQueryAnswer answer = null;
         Subquestion subquestion;
 
         values = new HashMap<>();
@@ -71,10 +75,12 @@ public class SubquestionDAO {
             if (questionID > 0) {
                 query = query + " WHERE questionID = ?";
                 values.put(1, questionID);
-                results = Database.selectStatement(query, values);
+                answer = Database.selectStatement(query, values);
             } else {
-                results = Database.simpleSelect(query);
+                answer = Database.simpleSelect(query);
             }
+
+            results = answer.getResults();
 
             while (results.next()) {
                 subquestion = this.setValues(results);
@@ -87,7 +93,7 @@ public class SubquestionDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return subquestions;
@@ -131,8 +137,6 @@ public class SubquestionDAO {
            ex.printStackTrace();
            System.out.println(ex.getMessage());
            throw new RuntimeException();
-       } finally {
-           Database.closeStatement();
        }
     }
 
@@ -153,8 +157,6 @@ public class SubquestionDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 

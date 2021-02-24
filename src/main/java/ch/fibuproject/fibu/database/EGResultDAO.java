@@ -27,7 +27,8 @@ public class EGResultDAO {
     public EGResult getEGResult(int exerciseGroupID, int userID) {
         String query;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         EGResult egResult = null;
 
         query = "SELECT * FROM EGResult" +
@@ -40,7 +41,9 @@ public class EGResultDAO {
         values.put(2, userID);
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
 
             if (results.next()) {
                 egResult = this.setValues(results);
@@ -50,7 +53,7 @@ public class EGResultDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return egResult;
@@ -65,7 +68,8 @@ public class EGResultDAO {
         String query;
         Vector<EGResult> egResults;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         EGResult egResult;
 
         values = new HashMap<>();
@@ -77,16 +81,18 @@ public class EGResultDAO {
             switch (filter) {
                 case FILTERBYEXERCISEGROUPID:
                     query = query + " WHERE exerciseGroupID = ?";
-                    results = Database.selectStatement(query, values);
+                    answer = Database.selectStatement(query, values);
                     break;
                 case FILTERBYUSERID:
                     query = query + " WHERE userID = ?";
-                    results = Database.selectStatement(query, values);
+                    answer = Database.selectStatement(query, values);
                     break;
                 default:
-                    results = Database.simpleSelect(query);
+                    answer = Database.simpleSelect(query);
                     break;
             }
+
+            results = answer.getResults();
 
             while (results.next()) {
                 egResult = this.setValues(results);
@@ -99,7 +105,7 @@ public class EGResultDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return egResults;
@@ -109,7 +115,8 @@ public class EGResultDAO {
         String query, middlePart;
         int egResultID = 0;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         middlePart = " SET userID = ?," +
                 " exerciseGroupID = ?," +
                 " solved = ?," +
@@ -126,7 +133,9 @@ public class EGResultDAO {
         values.put(2, egResult.getUserID());
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
 
             if (results.next()) {
                 egResultID = results.getInt("egResultID");
@@ -136,7 +145,7 @@ public class EGResultDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         values.clear();
@@ -160,8 +169,6 @@ public class EGResultDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -184,8 +191,6 @@ public class EGResultDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 

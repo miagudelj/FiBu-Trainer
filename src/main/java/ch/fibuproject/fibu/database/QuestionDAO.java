@@ -22,7 +22,8 @@ public class QuestionDAO {
     public Question getQuestion(int id) {
         String query;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         Question question = null;
 
         query = "SELECT * FROM Question" +
@@ -33,7 +34,9 @@ public class QuestionDAO {
         values.put(1, id);
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
 
             if (results.next()) {
                 question = this.setValues(results);
@@ -43,7 +46,7 @@ public class QuestionDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return question;
@@ -57,7 +60,8 @@ public class QuestionDAO {
         String query;
         Vector<Question> questions;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         Question question;
 
         values = new HashMap<>();
@@ -68,10 +72,12 @@ public class QuestionDAO {
             if (exerciseGroupID > 0) {
                 query = query + " WHERE exerciseGroupID = ?";
                 values.put(1, exerciseGroupID);
-                results = Database.selectStatement(query, values);
+                answer = Database.selectStatement(query, values);
             } else {
-                results = Database.simpleSelect(query);
+                answer = Database.simpleSelect(query);
             }
+
+            results = answer.getResults();
 
             while (results.next()) {
                 question = this.setValues(results);
@@ -84,7 +90,7 @@ public class QuestionDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return questions;
@@ -128,8 +134,6 @@ public class QuestionDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -150,8 +154,6 @@ public class QuestionDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 

@@ -1,7 +1,6 @@
 package ch.fibuproject.fibu.database;
 
 import ch.fibuproject.fibu.model.DBResult;
-import ch.fibuproject.fibu.model.EGResult;
 import ch.fibuproject.fibu.model.MCAnswer;
 
 import java.sql.ResultSet;
@@ -29,7 +28,8 @@ public class MCAnswerDAO {
     public MCAnswer getMCAnswer(int mcOptionID, int userID) {
         String query;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         MCAnswer mcAnswer = null;
 
         query = "SELECT * FROM MCAnswer" +
@@ -42,7 +42,9 @@ public class MCAnswerDAO {
         values.put(2, userID);
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
 
             if (results.next()) {
                 mcAnswer = this.setValues(results);
@@ -52,7 +54,7 @@ public class MCAnswerDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return mcAnswer;
@@ -67,7 +69,8 @@ public class MCAnswerDAO {
         String query;
         Vector<MCAnswer> mcAnswers;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         MCAnswer mcAnswer;
 
         values = new HashMap<>();
@@ -79,16 +82,18 @@ public class MCAnswerDAO {
             switch (filter) {
                 case FILTERBYMCOPTIONID:
                     query = query + " WHERE mcOptionID = ?";
-                    results = Database.selectStatement(query, values);
+                    answer = Database.selectStatement(query, values);
                     break;
                 case FILTERBYUSERID:
                     query = query + " WHERE userID = ?";
-                    results = Database.selectStatement(query, values);
+                    answer = Database.selectStatement(query, values);
                     break;
                 default:
-                    results = Database.simpleSelect(query);
+                    answer = Database.simpleSelect(query);
                     break;
             }
+
+            results = answer.getResults();
 
             while (results.next()) {
                 mcAnswer = this.setValues(results);
@@ -101,7 +106,7 @@ public class MCAnswerDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return mcAnswers;
@@ -111,7 +116,8 @@ public class MCAnswerDAO {
         String query, middlePart;
         int mcAnswerID = 0;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         middlePart = " SET mcOptionID = ?," +
                 " userID = ?";
 
@@ -126,7 +132,9 @@ public class MCAnswerDAO {
         values.put(2, mcAnswer.getUserID());
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
 
             if (results.next()) {
                 mcAnswerID = results.getInt("mcAnswerID");
@@ -136,7 +144,7 @@ public class MCAnswerDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         values.clear();
@@ -158,8 +166,6 @@ public class MCAnswerDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -182,8 +188,6 @@ public class MCAnswerDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 

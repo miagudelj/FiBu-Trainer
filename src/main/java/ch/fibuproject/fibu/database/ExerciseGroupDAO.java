@@ -1,9 +1,7 @@
 package ch.fibuproject.fibu.database;
 
-import ch.fibuproject.fibu.model.AccountChart;
 import ch.fibuproject.fibu.model.DBResult;
 import ch.fibuproject.fibu.model.ExerciseGroup;
-import ch.fibuproject.fibu.model.Question;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +23,8 @@ public class ExerciseGroupDAO {
     public ExerciseGroup getExerciseGroup(int id) {
         String query;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         ExerciseGroup exerciseGroup = null;
 
         query = "SELECT * FROM ExerciseGroup" +
@@ -36,7 +35,9 @@ public class ExerciseGroupDAO {
         values.put(1, id);
 
         try {
-            results = Database.selectStatement(query, values);
+            answer = Database.selectStatement(query, values);
+
+            results = answer.getResults();
 
             if (results.next()) {
                 exerciseGroup = this.setValues(results);
@@ -46,7 +47,7 @@ public class ExerciseGroupDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return exerciseGroup;
@@ -60,7 +61,8 @@ public class ExerciseGroupDAO {
         String query;
         Vector<ExerciseGroup> exerciseGroups;
         Map<Integer, Object> values;
-        ResultSet results;
+        ResultSet results = null;
+        DBQueryAnswer answer = null;
         ExerciseGroup exerciseGroup;
 
         values = new HashMap<>();
@@ -71,10 +73,12 @@ public class ExerciseGroupDAO {
             if (subjectID > 0) {
                 query = query + " WHERE subjectID = ?";
                 values.put(1, subjectID);
-                results = Database.selectStatement(query, values);
+                answer = Database.selectStatement(query, values);
             } else {
-                results = Database.simpleSelect(query);
+                answer = Database.simpleSelect(query);
             }
+
+            results = answer.getResults();
 
             while (results.next()) {
                 exerciseGroup = this.setValues(results);
@@ -87,7 +91,7 @@ public class ExerciseGroupDAO {
             System.out.println(ex.getMessage());
             throw new RuntimeException();
         } finally {
-            Database.closeStatement();
+            Database.closeStatement(answer);
         }
 
         return exerciseGroups;
@@ -131,8 +135,6 @@ public class ExerciseGroupDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
@@ -153,8 +155,6 @@ public class ExerciseGroupDAO {
             ex.printStackTrace();
             System.out.println(ex.getMessage());
             throw new RuntimeException();
-        } finally {
-            Database.closeStatement();
         }
     }
 
