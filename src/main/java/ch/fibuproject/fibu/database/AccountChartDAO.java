@@ -123,6 +123,50 @@ public class AccountChartDAO {
         }
     }
 
+    public DBResult addAccount(int accountID, int accountChartID) {
+        String query;
+        Map<Integer, Object> values;
+
+        values = new HashMap<>();
+
+        query = "INSERT INTO Account_AccountChart" +
+                " SET accountID = ?," +
+                " accountChartID = ?";
+
+        values.put(1, accountID);
+        values.put(2, accountChartID);
+
+        try {
+            return Database.updateStatement(query, values);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println(ex.getMessage());
+            throw new RuntimeException();
+        }
+    }
+
+    public DBResult removeAccount(int accountID, int accountChartID) {
+        String query;
+        Map<Integer, Object> values;
+
+        values = new HashMap<>();
+
+        query = "DELETE FROM Account_AccountChart" +
+                " WHERE accountID = ?" +
+                " AND accountChartID = ?";
+
+        values.put(1, accountID);
+        values.put(2, accountChartID);
+
+        try {
+            return Database.updateStatement(query, values);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println(ex.getMessage());
+            throw new RuntimeException();
+        }
+    }
+
     public DBResult deleteAccountChart(int accountChartID) {
         String query;
         Map<Integer, Object> values;

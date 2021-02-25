@@ -68,7 +68,12 @@ public class AccountDAO {
 
         try {
             if (accountChartID > 0) {
-                query = query + " WHERE accountChartID = ?";
+                query = "SELECT a.accountID AS accountID, a.accountNumber AS accountNumber," +
+                        " a.accountName AS accountName" +
+                        " FROM Account AS a" +
+                        " LEFT JOIN Account_AccountChart AS aac" +
+                        " ON a.accountID = aac.accountID" +
+                        " WHERE aac.accountChartID = ?";
                 values.put(1, accountChartID);
                 answer = Database.selectStatement(query, values);
             } else {
@@ -94,34 +99,32 @@ public class AccountDAO {
         return accounts;
     }
 
-    public DBResult saveAccount(Account account, int accountChartID) {
-        return this.updateStatement(account, accountChartID, true);
+    public DBResult saveAccount(Account account) {
+        return this.updateStatement(account, true);
     }
 
-    public DBResult updateAccount(Account account, int accountChartID) {
-        return this.updateStatement(account, accountChartID, false);
+    public DBResult updateAccount(Account account) {
+        return this.updateStatement(account, false);
     }
 
 
-    private DBResult updateStatement(Account account, int accountChartID, boolean isNew) {
+    private DBResult updateStatement(Account account, boolean isNew) {
         String query, middlePart;
         Map<Integer, Object> values;
         middlePart = " SET accountNumber = ?," +
-                " accountName = ?," +
-                " accountChartID = ?";
+                " accountName = ?";
 
         values = new HashMap<>();
 
         values.put(1, account.getNumber());
         values.put(2, account.getName());
-        values.put(3, accountChartID);
 
         if (isNew) {
             query = "INSERT INTO Account" + middlePart;
         } else {
             query = "UPDATE Account" + middlePart +
                     " WHERE accountID = ?";
-            values.put(4, account.getId());
+            values.put(3, account.getId());
         }
 
         try {
