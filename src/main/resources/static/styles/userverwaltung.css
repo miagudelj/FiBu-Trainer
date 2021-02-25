@@ -17,6 +17,12 @@ html, body {
     svg {
         width: 3vw !important;
     }
+
+
+    #backButton {
+        margin: 0vw !important;
+        position: relative !important;
+    }
 }
 
 /* ICON */
@@ -57,13 +63,14 @@ header {
 
 .block {
     color: black;
+    font-size: 1.5vw !important;
     background-color: white;
     padding: 1.5vw;
     border-radius: 0.5vw;
     margin-top: 1vw;
 }
 
-.block .row .col-2{
+.block .row .col-2, .block .row .col-1{
     padding: 0vw !important;
     margin: 0vw !important;
 }
@@ -121,17 +128,21 @@ header {
     margin-right: 2vw !important;
 }*/
 
+#userverwaltung {
+    background-color: white !important;
+}
+
 #backButton {
     margin-left: -8vw;
     margin-top: 0.5vw;
     position: fixed;
 }
 
-#newClass, #allUsers {
+#newKlasse, #allUsers, #newUser {
     color: #0B0B3B !important;
     margin: 1vw 0vw 1vw 0vw;
     padding: 0.2vw 0.5vw 0.2vw 0.5vw !important;
 }
-#newClass:hover, #allUsers:hover {
+#newKlasse:hover, #allUsers:hover, #newUser:hover {
     background-color: white !important;
 }
