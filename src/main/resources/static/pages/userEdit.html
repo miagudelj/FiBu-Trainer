@@ -1,10 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- css sheet for own style -->
+    <link rel="stylesheet" type="text/css" href="../styles/userEdit_style.css">
+    <!-- binding bootstrap css -->
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- binding ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- binding bootrstrap javascript -->
+    <!-- JavaScript Bundle with Popper -->
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+
+    <!-- local js -->
+    <script src="../js/login.js"></script>
+    <script src="../js/js.cookies.js"></script>
+
+    <title>FiBu Trainer - Klasse bearbeiten</title>
 </head>
 <body>
+<header>
+    <nav class="navbar fixed-top">
+        <!-- nav brand -->
+        <div class="navbar-brand">
+            <img src="../img/fibu_logo.png"/>
+        </div>
+        <!-- search bar -->
+        <form class="search form-inline">
+            <input class="form-control mr-sm-2" id="search-text" type="search" placeholder="Thema">
+            <button class="btn btn-outline-success" id="search-button" type="submit">Suchen</button>
+        </form>
+        <!-- logout -->
+        <div class="navbar-nav flex-row ml-md-auto d-md-flex">
+            <button name="benutzerverwaltung" class="btn" id="userverwaltung" title="Benutzerverwaltung">
+                <a href="klassen.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
+                         viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd"
+                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                </a>
+            </button>
+            <button name="sign out" class="btn" id="logoutButton" title="Log Out">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                     class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                    <path fill-rule="evenodd"
+                          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <h1>Klasse Bearbeiten</h1>
+    <div class="content">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-8">
+                    <input type="text" name="klassenname" id="klassenname" class="form-control" placeholder="Klassenname" autofocus required/>
+                    <br>
+                        Teilnehmer zufügen</br>
+                        <span>CTRL gedrückt halten, um mehrere Nutzer auszuwählen</span>
+                    </p>
+                    <select class="form-control" size="15" multiple>
+                        <option>i3a</option>
+                        <option>h2b</option>
+                        <option>g4e</option>
+                        <option>i3a</option>
+                        <option>h2b</option>
+                        <option>g4e</option>
+                        <option>i3a</option>
+                        <option>h2b</option>
+                        <option>g4e</option>
+                        <option>i3a</option>
+                        <option>h2b</option>
+                        <option>i3a</option>
+                        <option>h2b</option>
+                        <option>g4e</option>
+                        <option>i3a</option>
+                        <option>h2b</option>
+                        <option>g4e</option>
+                        <option>i3a</option>
+                        <option>h2b</option>
+                        <option>g4e</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn btn-primary" id="saveKlasse">Speichern</button>
+                </div>
+            </div>
+        </div>
 
+    </div>
+</div>
 </body>
 </html>

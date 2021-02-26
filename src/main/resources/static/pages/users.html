@@ -27,7 +27,7 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     <!-- local js -->
-    <script src="../js/userverwaltung.js"></script>
+    <script src="../js/klassen.js"></script>
     <script src="../js/login.js"></script>
     <script src="../js/js.cookies.js"></script>
 
@@ -48,7 +48,7 @@
         <!-- logout -->
         <div class="navbar-nav flex-row ml-md-auto d-md-flex">
             <button name="benutzerverwaltung" class="btn" id="userverwaltung" title="Benutzerverwaltung">
-                <a href="userverwaltung.html">
+                <a href="klassen.html">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
                          viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
@@ -71,7 +71,7 @@
 </header>
 <div class="container">
     <button name="zurück" class="btn" id="backButton" title="zurück">
-        <a href="userverwaltung.html">
+        <a href="klassen.html">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left"
                  viewBox="0 0 16 16">
                 <path fill-rule="evenodd"
@@ -165,7 +165,10 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-6" id="klasseSelect">
-                                                    <select class="form-control">
+                                                    <select class="form-control" size="5">
+                                                        <option>i3a</option>
+                                                        <option>h2b</option>
+                                                        <option>g4e</option>
                                                         <option>i3a</option>
                                                         <option>h2b</option>
                                                         <option>g4e</option>
@@ -175,8 +178,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
-                                        </button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
                                         <button type="button" class="btn btn-primary" id="saveKlasse">Speichern</button>
                                     </div>
                                 </div>

@@ -47,7 +47,7 @@ function loadBenutzer() {
 
         .fail(function (xhr, status, errorThrown) {
             if (xhr.status == 403) {
-                window.location.href("./userverwaltung.html");
+                window.location.href("./klassen.html");
             } else if (xhr.status == 404) {
                 alert("keine Benutzer vorhanden");
             } else {
@@ -106,7 +106,7 @@ function listBenutzerBlocks(benutzerData) {
             modalData += `                                            </select>`;
             modalData += `                                        </div>`;
             modalData += `                                        <div class="col-6" id="klasseSelect">`;
-            modalData += `                                            <select class="form-control">`;
+            modalData += `                                            <select class="form-control" size="5">`;
             modalData += `                                            ${benutzer}`; //todo get class
             modalData += `                                            </select>`;
             modalData += `                                        </div>`;
