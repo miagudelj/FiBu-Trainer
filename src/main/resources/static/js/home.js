@@ -19,17 +19,6 @@ $(document).ready(
             showUsersButton();
         }*/
         loadThemes();
-
-        /**
-         * listener for buttons within themeForm
-         */
-        // TODO DO WE NEED THIS?
-        /*
-        $("#tierForm").on("click", "button", function () {
-            if (confirm("Wollen Sie dieses Buch wirklich löschen?")) {
-                deleteTier(this.value);
-            }
-        });*/
     }
 );
 
