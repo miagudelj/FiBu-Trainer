@@ -92,6 +92,9 @@ header {
 .modal {
     background: rgba(0, 0, 0, 0.5);
 }
+.form-control {
+    margin-bottom: 0.5vw !important;
+}
 .modal-content {
     color: #0B0B3B;
     background-color: #b0acdc !important;

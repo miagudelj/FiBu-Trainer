@@ -13,9 +13,10 @@
 $(document).ready(
     function () {
         loadBenutzer();
+        loadKlassen();
 
 
-        $("#saveBenutzer").click(saveBenutzer());
+        $("#saveBenutzer").click(saveBenutzer);
 
         /**
          * listener for buttons (edit and delete) within blocks
@@ -30,8 +31,7 @@ $(document).ready(
 );
 
 /**
- * loads the Benutzer from the webservice
- *
+ * loads the Benutzer from the webservice *
  */
 
 function loadBenutzer() {
@@ -43,7 +43,7 @@ function loadBenutzer() {
         dataType: "json"
     })
 
-        .done(showBenutzer)
+        .done(listBenutzerBlocks)
 
         .fail(function (xhr, status, errorThrown) {
             if (xhr.status == 403) {
@@ -58,46 +58,79 @@ function loadBenutzer() {
 
 
 /**
- * shows all Benutzern as blocks
+ * shows all Benutzer as blocks
  *
- * @param benutzerData all Benutzern as an array
+ * @param benutzerData all Benutzer as an array
  */
-function showBenutzer(benutzerData) {
+function listBenutzerBlocks(benutzerData) {
 
     $(".list").html("");
 
-    var blockData = "";
+    var modalData = "";
 
     $.each(benutzerData, function (benutzerUUID, benutzer) {
         // TODO usertype?
         if (Cookies.get("userType") == "ADMIN") {
-            blockData += `<div class="col-sm-12 col-md-3">`;
-            blockData += `    <div class="block">`;
-            blockData += `        <div class="row">`;
-            blockData += `            <div class="col-8">`;
-            blockData += `                <a href='./users.html?benutzerUUID=" + benutzerUUID + "'>`;
-            blockData += `                    <h3>${benutzer.name}1</h3>`;
-            blockData += `                </a>`;
-            blockData += `            </div>`;
-            blockData += `            <div class="col-2">`;
-            blockData += `                <button class="btn edit" id="editButton" title="Benutzer bearbeiten" >`;
-            blockData += `                    <a class='btn' role='button' href='./benutzerEdit.html?benutzerUUID=" + benutzerUUID + "'>`;
-            blockData += `                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">`;
-            blockData += `                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>`;
-            blockData += `                        </svg>`;
-            blockData += `                    </a>`;
-            blockData += `                </button>`;
-            blockData += `            </div>`;
-            blockData += `            <div class="col-2">`;
-            blockData += `                <button class='btn delete' id='deleteBenutzerButton" + benutzerUUID + "' value='" + benutzerUUID + "' title='Benutzer löschen'>`;
-            blockData += `                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">`;
-            blockData += `                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>`;
-            blockData += `                    </svg>`;
-            blockData += `                </button>`;
-            blockData += `            </div>`;
-            blockData += `        </div>`;
-            blockData += `    </div>`;
-            blockData += `</div>`;
+            modalData += `<div class="col-sm-12 col-md-3">`;
+            modalData += `    <div class="block">`;
+            modalData += `        <div class="row">`;
+            modalData += `            <div class="col-8">`;
+            modalData += `                <a href='./users.html?benutzerUUID=" + benutzerUUID + "'>`;
+            modalData += `                    <h3>${benutzer.name}</h3>`;
+            modalData += `                </a>`;
+            modalData += `            </div>`;
+            modalData += `            <div class="col-2">`;
+            modalData += `                <button class="btn edit" id="editButton" title="Benutzer bearbeiten" >`;
+            modalData += `                    <a class='btn' role='button' href='./benutzerEdit.html?benutzerUUID=" + benutzerUUID + "'>`;
+            modalData += `                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">`;
+            modalData += `                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>`;
+            modalData += `                        </svg>`;
+            modalData += `                    </a>`;
+            modalData += `                </button>`;
+            modalData += `                <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">`;
+            modalData += `                    <div class="modal-dialog" role="document">`;
+            modalData += `                        <div class="modal-content">`;
+            modalData += `                            <div class="modal-header">`;
+            modalData += `                                <h3 class="modal-title" id="ModalLongTitle">Benutzer bearbeiten</h3>`;
+            modalData += `                            </div>`;
+            modalData += `                            <div class="modal-body">`;
+            modalData += `                                <!-- form -->`;
+            modalData += `                                <div class="form-group">`;
+            modalData += `                                    <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="'${benutzer.username}'" autofocus required/>`;
+            modalData += `                                    <input type="text" name="password" id="password" class="form-control" placeholder="Passwort" autofocus required/>`;
+            modalData += `                                    <div class="row">`;
+            modalData += `                                        <div class="col-6">`;
+            modalData += `                                            <select class="form-control" id="roleSelect">`;
+            modalData += `                                                <option>Admin</option>`;/*todo need?*/
+            modalData += `                                                <option>Schüler</option>`;/*todo need?*/
+            modalData += `                                            </select>`;
+            modalData += `                                        </div>`;
+            modalData += `                                        <div class="col-6" id="klasseSelect">`;
+            modalData += `                                            <select class="form-control">`;
+            modalData += `                                            ${benutzer}`; //todo get class
+            modalData += `                                            </select>`;
+            modalData += `                                        </div>`;
+            modalData += `                                    </div>`;
+            modalData += `                                </div>`;
+            modalData += `                            </div>`;
+            modalData += `                            <div class="modal-footer">`;
+            modalData += `                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen </button>`;
+            modalData += `                                <button type="button" class="btn btn-primary" id="saveKlasse">Speichern</button>`;
+            modalData += `                            </div>`;
+            modalData += `                        </div>`;
+            modalData += `                    </div>`;
+            modalData += `                </div>`;
+            modalData += `            </div>`;
+            modalData += `            <div class="col-2">`;
+            modalData += `                <button class='btn delete' id='deleteBenutzerButton" + benutzerUUID + "' value='" + benutzerUUID + "' title='Benutzer löschen'>`;
+            modalData += `                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">`;
+            modalData += `                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>`;
+            modalData += `                    </svg>`;
+            modalData += `                </button>`;
+            modalData += `            </div>`;
+            modalData += `        </div>`;
+            modalData += `    </div>`;
+            modalData += `</div>`;
 
         } else {
             // TODO ändere
@@ -105,9 +138,8 @@ function showBenutzer(benutzerData) {
 
         }
     })
-    $(".list").html(blockData);
+    $(".list").html(modalData);
 }
-
 
 /**
  * send delete request for a Benutzer
@@ -139,3 +171,54 @@ function deleteBenutzer(benutzerUUID) {
 function saveBenutzer() {
     //TODO
 }
+
+/**
+ * loads all Klassen for list in dropbox from the webservice
+ */
+function loadKlassen() {
+    $.ajax({
+        //todo correct url
+        url: ".klasse/list",
+        dataType: "json",
+        type: "GET"
+    })
+        .done(showKlassen())
+
+        .fail(function (xhr, status, errorThrown) {
+            if (xhr.status == 404) {
+                alert("Keine Klasse gefunden");
+            } else {
+                window.location.href = "./users.html";
+            }
+        })
+}
+
+/**
+ * lists all Klassen in dropdown
+ * @param klassen
+ */
+function showKlassen(klassen) {
+
+    $.each(klassen, function (classID, klasse) {
+        $('#klasseSelect').append($('<option>', {
+            value: klasse.classID,
+            text: klasse.name
+        }));
+    });
+}
+
+/**
+ * lists all roles in dropdown from the webservice
+ * @param roles
+ */
+//todo do we need this ?
+/*
+function showRoles(roles) {
+
+    $.each(roles, function (role) {
+        $('#klasseSelect').append($('<option>', {
+            value: role.??,
+            text : ?
+        }));
+    });
+}*/
