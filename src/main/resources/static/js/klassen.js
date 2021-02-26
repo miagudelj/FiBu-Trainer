@@ -14,13 +14,11 @@ $(document).ready(
     function () {
         loadKlasse();
 
-
-        $("#saveKlasse").click(saveKlasse());
+        $("#saveKlasse").click(saveKlasse);
 
         /**
          * listener for buttons (edit and delete) within blocks
          */
-        // todo
         $("#deleteKlasseButton").click(function () {
             if (confirm("Wollen Sie diese Klasse wirklich löschen?")) {
                 deleteKlasse(this.value);
@@ -33,12 +31,11 @@ $(document).ready(
  * loads the Klasse from the webservice
  *
  */
-
 function loadKlasse() {
 
     $.ajax({
         // TODO url korrigieren
-        url: "./klasse/list",
+        url: "./class/list",
         type: "GET",
         dataType: "json"
     })
@@ -69,8 +66,7 @@ function showKlasse(klasseData) {
     var blockData = "";
 
     $.each(klasseData, function (classID, klasse) {
-        // TODO usertype?
-        if (Cookies.get("userType") == "ADMIN") {
+
             blockData += `<div class="col-sm-12 col-md-3">`;
             blockData += `    <div class="block">`;
             blockData += `        <div class="row">`;
@@ -98,12 +94,6 @@ function showKlasse(klasseData) {
             blockData += `        </div>`;
             blockData += `    </div>`;
             blockData += `</div>`;
-
-        } else {
-            // TODO ändere
-            alert("Was wetsh du alter");
-
-        }
     })
     $(".list").html(blockData);
 }
@@ -116,7 +106,7 @@ function showKlasse(klasseData) {
 function deleteKlasse(classID) {
     $.ajax({
         // TODO richtige url korrigieren
-        url: "klasse/delete?classID=" + classID,
+        url: "class/delete?classID=" + classID,
         dataType: "text",
         type: "DELETE",
     })
@@ -133,9 +123,28 @@ function deleteKlasse(classID) {
 }
 
 /**
- * send insert request for a new Klasse
+ * sends the class data to the webservice
+ * @param form the form being submitted
  */
-//TODO parameter needed?
-function saveKlasse() {
-    //TODO
+function saveKlasse(form) {
+    form.preventDefault();
+
+    $.ajax({
+        url: "./class/save",
+        dataType: "text",
+        type: "POST",
+        data: $("#saveKlasse").serialize()
+    })
+
+        .done(function (jsonData) {
+            window.location.href = "./klassen.html";
+        })
+
+        .fail(function (xhr, status, errorThrown) {
+            if (xhr.status == 404) {
+                alert("Diese Klasse exisklasset nicht");
+            } else {
+                alert("Fehler beim Speichern der Klasse");
+            }
+        })
 }
