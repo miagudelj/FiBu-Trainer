@@ -37,7 +37,7 @@ public class Controller {
      */
     @RequestMapping(value = "/user/login", method = RequestMethod.POST, consumes="application/json")
     @ResponseBody
-    public boolean login(@RequestBody User requestUser, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public HttpStatus login(@RequestBody User requestUser, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         User dbUser = new UserDAO().getUser(requestUser.getUsername());
         String pwdCheck = dbUser.getPasswordHash();
         if (pwdCheck.equals(requestUser.getPassword())) {
@@ -50,9 +50,9 @@ public class Controller {
                 response.addCookie(usrCookie);
                 response.addCookie(pwdCookie);
             }
-            return true;
+            return HttpStatus.OK;
         } else {
-            return false;
+            return HttpStatus.UNAUTHORIZED;
         }
     }
 
