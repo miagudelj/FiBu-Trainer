@@ -3,14 +3,15 @@ package ch.fibuproject.fibu.controller;
 import ch.fibuproject.fibu.database.*;
 import ch.fibuproject.fibu.model.*;
 import ch.fibuproject.fibu.model.Class;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Vector;
 
@@ -38,7 +39,7 @@ public class Controller {
      */
     @RequestMapping(value = "/user/login", method = RequestMethod.POST, consumes="application/json")
     @ResponseBody
-    public HttpStatus login(@RequestBody User requestUser, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity login(@RequestBody User requestUser, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         try {
             User dbUser = new UserDAO().getUser(requestUser.getUsername());
             String pwdCheck = dbUser.getPasswordHash();
@@ -52,16 +53,14 @@ public class Controller {
                     response.addCookie(usrCookie);
                     response.addCookie(pwdCookie);
                 }
-                System.out.println(HttpStatus.OK);
-                return HttpStatus.OK;
+                return new ResponseEntity("login successful", new HttpHeaders(), HttpStatus.OK);
             } else {
-                System.out.println(HttpStatus.UNAUTHORIZED);
-                return HttpStatus.UNAUTHORIZED;
+                return new ResponseEntity("wrong login information", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
             }
         }
         catch(Exception ex){
             ex.printStackTrace();
-            return HttpStatus.INTERNAL_SERVER_ERROR;
+            return new ResponseEntity("Error in ch.fibuproject.fibu.controller.Controller.login", new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

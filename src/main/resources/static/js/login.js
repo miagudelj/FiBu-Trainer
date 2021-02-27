@@ -49,7 +49,7 @@ function sendLogin(form) {
          * Request failed
          */
         .fail(function (xhr, status, errorThrown) {
-            if (xhr.status == 404) {
+            if (xhr.status == 401) {
                 alert("Benutzername/Passwort unbekannt");
             } else {
                 alert("Es ist ein Fehler aufgetreten");
