@@ -33,7 +33,7 @@ public class Controller {
      *     /delete - remove user form database
      *     /save - create new user and save into database
      *     /read - get a single user
-     * @return
+     * @return boolean to check if successful
      */
     @RequestMapping(value = "/user/login", method = RequestMethod.POST, consumes="application/json")
     @ResponseBody
