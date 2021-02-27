@@ -29,7 +29,6 @@ public class Configuration {
 
         try {
             InputStream resource = new FileInputStream(usedConfig);
-            System.out.println(resource.available());
             config = YamlConfig.load(resource);
         } catch (IOException ex) {
             ex.printStackTrace();

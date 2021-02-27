@@ -33,10 +33,11 @@ public class Controller {
      *     /delete - remove user form database
      *     /save - create new user and save into database
      *     /read - get a single user
+     * @return
      */
     @RequestMapping(value = "/user/login", method = RequestMethod.POST, consumes="application/json")
     @ResponseBody
-    public HttpServletResponse login(@RequestBody User requestUser, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public boolean login(@RequestBody User requestUser, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         User dbUser = new UserDAO().getUser(requestUser.getUsername());
         String pwdCheck = dbUser.getPasswordHash();
         if (pwdCheck.equals(requestUser.getPassword())) {
@@ -49,9 +50,9 @@ public class Controller {
                 response.addCookie(usrCookie);
                 response.addCookie(pwdCookie);
             }
-            return response;
+            return true;
         } else {
-            return null;
+            return false;
         }
     }
 
