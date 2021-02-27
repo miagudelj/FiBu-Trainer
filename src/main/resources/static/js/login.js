@@ -6,10 +6,10 @@
  * @version 1.0
  */
 
-$( document ).ready(
+$(document).ready(
     function () {
 
-        $("#login-form").submit(sendLogin);
+        $("#loginButton").click(sendLogin);
         $("#logoutButton").click(sendLogout);
 
     });
@@ -23,16 +23,15 @@ function sendLogin(form) {
     form.preventDefault();
     var formJqObj = $("#login-form");
     var formDataObj = {};
-    (function(){
-        formJqObj.find(":input").not("[type='submit']").not("[type='reset']").each(function(){
+    (function () {
+        formJqObj.find(":input").not("[type='submit']").not("[type='reset']").each(function () {
             var thisInput = $(this);
             formDataObj[thisInput.attr("name")] = thisInput.val();
         });
     })();
-    console.log(formDataObj);
     $.ajax({
-        url: window.location.origin+"/user/login",
-        contentType : "application/json",
+        url: window.location.origin + "/user/login",
+        contentType: "application/json",
         type: "POST",
         dataType: 'json',
         data: JSON.stringify(formDataObj)
@@ -51,6 +50,8 @@ function sendLogin(form) {
         .fail(function (xhr, status, errorThrown) {
             if (xhr.status == 401) {
                 alert("Benutzername/Passwort unbekannt");
+            } else if (xhr.status == 200) {
+                window.location.href = "./pages/home.html";
             } else {
                 alert("Es ist ein Fehler aufgetreten");
             }
@@ -64,7 +65,7 @@ function sendLogout() {
 
     $.ajax({
         type: "GET",
-        url: window.location.origin+"/user/logout",
+        url: window.location.origin + "/user/logout",
         type: "DELETE",
         dataType: "text"
     })
