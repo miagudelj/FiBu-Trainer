@@ -50,9 +50,9 @@ function sendLogin(form) {
          */
         .fail(function (xhr, status, errorThrown) {
             if (xhr.status == 404) {
-                $("#message").text("Benutzername/Passwort unbekannt");
+                alert("Benutzername/Passwort unbekannt");
             } else {
-                $("#message").text("Es ist ein Fehler aufgetreten");
+                alert("Es ist ein Fehler aufgetreten");
             }
         })
 }

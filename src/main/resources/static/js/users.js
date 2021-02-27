@@ -160,7 +160,7 @@ function listBenutzer(benutzerData) {
 function deleteBenutzer(userID) {
     $.ajax({
         //TODO frege /user/delete?{userID}
-        url: "user/delete?userID=" + userID,
+        url: "/user/delete?userID=" + userID,
         dataType: "text",
         type: "DELETE",
     })
