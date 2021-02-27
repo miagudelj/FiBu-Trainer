@@ -40,7 +40,9 @@ function loadKlasse() {
 
     if (classID !== null && classID != -1) {
         $.ajax({
-            url: "./class/read?classID=" + classID,
+            //todo vini frege weg parameter
+            //url: "/class/read?classID=" + classID,
+            url: "/class/read",
             type: "GET",
             dataType: "json"
         })
@@ -78,7 +80,7 @@ function saveKlasse(form) {
     form.preventDefault();
 
     $.ajax({
-        url: "./class/update",
+        url: "/class/update",
         dataType: "text",
         type: "PUT",
         data: $("#saveKlasse").serialize()
@@ -102,7 +104,7 @@ function saveKlasse(form) {
  */
 function loadBenutzer() {
     $.ajax({
-        url: "./user/list",
+        url: "/user/list",
         dataType: "json",
         type: "GET"
     })

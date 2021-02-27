@@ -37,7 +37,7 @@ $(document).ready(
 function loadBenutzer() {
 
     $.ajax({
-        url: "./user/list",
+        url: "/user/list",
         type: "GET",
         dataType: "json"
     })
@@ -159,6 +159,7 @@ function listBenutzer(benutzerData) {
  */
 function deleteBenutzer(userID) {
     $.ajax({
+        //TODO frege /user/delete?{userID}
         url: "user/delete?userID=" + userID,
         dataType: "text",
         type: "DELETE",
@@ -183,14 +184,15 @@ function saveBenutzer(form) {
     form.preventDefault();
     var userID = $.urlParam("userID");
 
-    var url = "./user/";
+    var url = "/user/";
     var type = "";
 
     if (userID) {
+        //TODO was ish mit dem?
         url += "update";
         type = "PUT";
     } else {
-        url += "create";
+        url += "save";
         type = "POST";
     }
 
@@ -219,7 +221,7 @@ function saveBenutzer(form) {
  */
 function loadKlassen() {
     $.ajax({
-        url: ".class/list",
+        url: "/class/list",
         dataType: "json",
         type: "GET"
     })

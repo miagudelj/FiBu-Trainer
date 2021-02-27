@@ -34,7 +34,7 @@ $(document).ready(
 function loadKlasse() {
 
     $.ajax({
-        url: "./class/list",
+        url: "/class/list",
         type: "GET",
         dataType: "json"
     })
@@ -104,7 +104,8 @@ function showKlasse(klasseData) {
  */
 function deleteKlasse(classID) {
     $.ajax({
-        url: "class/delete?classID=" + classID,
+        //TODO /class/delete?{classID}= oder wie??
+        url: "/class/delete?classID=" + classID,
         dataType: "text",
         type: "DELETE",
     })
@@ -128,7 +129,7 @@ function saveKlasse(form) {
     form.preventDefault();
 
     $.ajax({
-        url: "./class/save",
+        url: "/class/save",
         dataType: "text",
         type: "POST",
         data: $("#saveKlasse").serialize()

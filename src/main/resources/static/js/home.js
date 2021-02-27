@@ -29,7 +29,7 @@ $(document).ready(
 function loadThemes() {
 
     $.ajax({
-        url: "./themeblock/list",
+        url: "/blocks/themes/list",
         type: "GET",
         dataType: "json"
     })
