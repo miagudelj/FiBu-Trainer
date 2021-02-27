@@ -41,12 +41,8 @@ function sendLogin(form) {
         /**
          * Request success
          */
-        .done(function (xhr, jsonData) {
-            if (xhr.status == 200) {
-                window.location.href = "./pages/home.html";
-            } else {
-                alert("Benutzername/Passwort unbekannt");
-            }
+        .done(function (jsonData) {
+            window.location.href = "./pages/home.html";
         })
 
         /**
