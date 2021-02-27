@@ -15,11 +15,11 @@ import java.nio.file.StandardCopyOption;
 
 public class Configuration {
 
-    private static String seperator = File.separator;
+    private static String separator = File.separator;
     private static YamlConfig config;
     private static String path = System.getProperty("user.dir");
-    private static String savedConfig = path + seperator + "src" + seperator + "main" + seperator + "resources" + seperator + "config.yml";
-    private static String usedConfig = path + seperator + ".." + seperator + "config.yml";
+    private static String savedConfig = path + separator + "src" + separator + "main" + separator + "resources" + separator + "config.yml";
+    private static String usedConfig = path + separator + ".." + separator + "config.yml";
 
     /**
      * Initialises configuration
@@ -35,7 +35,6 @@ public class Configuration {
             ex.printStackTrace();
             System.out.println("Config konnte nicht gelesen werden.");
         }
-        //TODO: Replace try catch with throw
     }
 
     /**
@@ -47,7 +46,9 @@ public class Configuration {
 
         if (!configFile.exists()) {
             try {
-                configFile.createNewFile();
+                if (configFile.createNewFile()){
+                    System.out.println("File creation successful at " + usedConfig);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("The file could not be created at " + usedConfig);
@@ -64,10 +65,8 @@ public class Configuration {
 
     /**
      * Writes standardconfig
-     * @throws IOException
+     * @throws IOException for Files.copy
      */
-
-    //TODO: Change method to copy default config instead of writing it via code.
     private static void writeStandardConfig() throws IOException {
         Files.copy(new File(savedConfig).toPath(), new File(usedConfig).toPath(), StandardCopyOption.REPLACE_EXISTING);
     }

@@ -1,207 +1,176 @@
 package ch.fibuproject.fibu.controller;
 
-import ch.fibuproject.fibu.database.UserDAO;
-import ch.fibuproject.fibu.model.User;
+import ch.fibuproject.fibu.database.*;
+import ch.fibuproject.fibu.model.*;
+import ch.fibuproject.fibu.model.Class;
 import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Vinicius
  * 05.Feb 2021
  * Version: 1.0
  * Project description:
- * Controller
+ * Controller for the website
  */
 
 @RestController
-
 public class Controller {
 
+    /**
+     * /user
+     * is for responses for UserDAO
+     *     /login - log into website
+     *     /logout - logout of website
+     *     /list - list user
+     *     /delete - remove user form database
+     *     /save - create new user and save into database
+     *     /read - get a single user
+     */
     @RequestMapping(value = "/user/login", method = RequestMethod.POST, consumes="application/json")
     @ResponseBody
-    public User login(@RequestBody User requestUser) {
-        System.out.println(requestUser.getUsername());
-       // User dbUser = new UserDAO().getUser(requestUser.getUsername());
-        //String pwdCheck = dbUser.getPasswordHash();
-//        if (pwdCheck.equals(requestUser.getPassword())) {
-//            return dbUser;
-//        } else {
-//            return null;
-//        }
-        return requestUser;
-    }
-
-    @GetMapping("/user/logout")
-    public HttpStatus logout() {
-        return HttpStatus.valueOf(200);
-    }
-
-    //TODO talk about mapping with Mia and with Ciro about what to return
-    @GetMapping("/zoo/list")
-    public void listThemes() {
-
-    }
-    /*@GetMapping("/rest/allsongs")
-    public Vector<Song> getAllSongs() {
-        Vector<Song> songs = Database.retrieveAllSongs();
-
-        Vector<String> files = getResourcesFiles("static/music");
-        if(files.size()>0) {
-            Vector<Song> removeSongs = new Vector<>();
-
-            for (Song song : songs) {
-                if (!(files.contains(song.getFilepath()))) {
-                    System.out.println("The song: " + song.getName() + " does not exist.");
-                    removeSongs.add(song);
-                }
+    public HttpServletResponse login(@RequestBody User requestUser, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        User dbUser = new UserDAO().getUser(requestUser.getUsername());
+        String pwdCheck = dbUser.getPasswordHash();
+        if (pwdCheck.equals(requestUser.getPassword())) {
+            session.setAttribute("username", dbUser.getUsername());
+            if (request.getParameter("remember-me") != null){
+                Cookie usrCookie = new Cookie("username", dbUser.getUsername());
+                Cookie pwdCookie = new Cookie("password", dbUser.getPassword());
+                usrCookie.setMaxAge(3600);
+                pwdCookie.setMaxAge(3600);
+                response.addCookie(usrCookie);
+                response.addCookie(pwdCookie);
             }
+            return response;
+        } else {
+            return null;
+        }
+    }
 
-            for (Song song : removeSongs) {
-                songs.remove(song);
+    @RequestMapping(value = "/user/logout", method = RequestMethod.DELETE)
+    public HttpStatus logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        session.removeAttribute("username");
+        for (Cookie cookie : request.getCookies()) {
+            if (cookie.getName().equalsIgnoreCase("username")) {
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
             }
-        }else{
-            System.out.println("No files were recognised.");
-        }
-
-        return songs;
-    }
-
-    @GetMapping("/rest/allartists")
-    public Vector<Artist> getAllArtists() {
-        Vector<Artist> artists = Database.retrieveAllArtists();
-
-        return artists;
-    }
-
-    @GetMapping("/rest/allgenres")
-    public Vector<Genre> getAllGenres() {
-        Vector<Genre> genres = Database.retrieveAllGenres();
-
-        return genres;
-    }
-
-    @PostMapping("/rest/plusonestream")
-    public void plusOneStream(@RequestParam(value = "songID") int songID) {
-        try {
-            Database.plusOneStream(songID);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "Error when upping the stream count of song (ID: " + songID + ")", ex
-            );
-        }
-    }
-
-    private Vector<String> getResourcesFiles(String path){
-        Vector<String> filenames = new Vector<>();
-
-        try {
-            InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            String resource;
-            while((resource = reader.readLine())!=null){
-                filenames.add(resource);
+            if (cookie.getName().equalsIgnoreCase("password")) {
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
             }
-        }catch (Exception ex){
-            ex.printStackTrace();
         }
-
-        return filenames;
+        return HttpStatus.OK;
     }
 
-    @PostMapping("/rest/add/song")
-    public void addSong(@RequestParam(value = "songName") String songName,
-                        @RequestParam(value = "filePath") String filePath,
-                        @RequestParam(value = "coverPath") String coverPath,
-                        @RequestParam(value = "artistID") int artistID,
-                        @RequestParam(value = "genreID") int genreID) {
+    @RequestMapping(value = "/user/list", method = RequestMethod.GET)
+    public List<User> listUser() {
+        return new UserDAO().getAllUsers();
+    }
 
-        Song song = new Song();
-        song.setName(songName);
-        song.setFilepath(filePath);
-        song.setCoverpath(coverPath);
-        song.setStreams(0);
-        try {
-            Artist artist = Database.retrieveArtist(artistID);
-            if (artist != null) {
-                song.setArtist(artist);
-            } else {
-                throw new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "The requested artist was not found in the database."
-                );
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "Error while retrieving artist information", e
-            );
-        }
-
-        try {
-            Genre genre = Database.retrieveGenre(genreID);
-            if (genre != null) {
-                song.setGenre(genre);
-            } else {
-                throw new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "The requested Genre was not found."
-                );
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Error while retrieving genre.", e
-            );
-        }
-
-        try {
-            Database.addSong(song);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "Song could not be saved", e
-            );
+    @RequestMapping(value = "/user/delete?{userID}", method = RequestMethod.DELETE)
+    public HttpStatus deleteUser(@PathVariable Integer userID) {
+        switch (new UserDAO().deleteUser(userID)) {
+            case SUCCESS:
+                return HttpStatus.OK;
+            case ERROR:
+                return HttpStatus.BAD_REQUEST;
+            case NOACTION:
+                return HttpStatus.NOT_FOUND;
+            default:
+                return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
 
-
-    @PostMapping("/rest/add/artist")
-    public void addArtist(@RequestParam(value = "artistName") String artistName) {
-        Artist artist = new Artist();
-        artist.setName(artistName);
-        try {
-            Database.addArtist(artist);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "Error when trying to write to DB, artist not saved."
-            );
+    @RequestMapping(value = "/user/save", method = RequestMethod.POST, consumes = "application/json")
+    public HttpStatus saveUser(@RequestBody User saveUser, @RequestParam Integer userClass) {
+        switch (new UserDAO().saveUser(saveUser, userClass)){
+            case SUCCESS:
+                return HttpStatus.OK;
+            case ERROR:
+                return HttpStatus.BAD_REQUEST;
+            case NOACTION:
+                return HttpStatus.NOT_FOUND;
+            default:
+                return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
 
-    @PostMapping("/rest/add/genre")
-    public void addGenre(@RequestParam(value = "genreName") String genreName) {
-        Genre genre = new Genre();
-        genre.setName(genreName);
+    @RequestMapping(value = "/user/read", method = RequestMethod.GET)
+    public User readUser(@RequestParam String username) {
+        return new UserDAO().getUser(username);
+    }
 
-        try {
-            Database.addGenre(genre);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+    /**
+     * /class
+     * is for responses for ClassDAO
+     *     /list - list all classes
+     *     /delete - remove class form database
+     *     /save - create/update class and save into database
+     *     /read - get a single class
+     */
+    @RequestMapping(value = "/class/list", method = RequestMethod.GET)
+    public Vector<Class> listClasses() {
+        return new ClassDAO().retrieveAllClasses();
+    }
 
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "Error when trying to write to DB, genre not saved."
-            );
+    @RequestMapping(value = "/class/delete?{classID}", method = RequestMethod.DELETE)
+    public HttpStatus deleteClasses(@PathVariable Integer classID) {
+        switch (new ClassDAO().deleteClass(classID)) {
+            case SUCCESS:
+                return HttpStatus.OK;
+            case ERROR:
+                return HttpStatus.BAD_REQUEST;
+            case NOACTION:
+                return HttpStatus.NOT_FOUND;
+            default:
+                return HttpStatus.INTERNAL_SERVER_ERROR;
         }
-    }*/
+    }
+
+    @RequestMapping(value = "/class/save", method = RequestMethod.POST)
+    public HttpStatus saveClasses(@RequestBody Class saveClass) {
+        switch (new ClassDAO().newClass(saveClass)){
+            case SUCCESS:
+                return HttpStatus.OK;
+            case ERROR:
+                return HttpStatus.BAD_REQUEST;
+            case NOACTION:
+                return HttpStatus.NOT_FOUND;
+            default:
+                return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+    }
+
+    @RequestMapping(value = "/class/read", method = RequestMethod.GET)
+    public Class readClasses(@RequestParam Integer classID) {
+        return new ClassDAO().retrieveClass(classID);
+    }
+
+    /**
+     * /blocks
+     * is for responses for QuestionDAO and SubjectDAO
+     *     /themes - responses for SubjectDAO
+     *         /list - list all subjects
+     *     /workID - response for questions inside of subjects
+     *         /list - list all questions inside of a subject
+     * @return
+     */
+    @RequestMapping(value = "/blocks/themes/list", method = RequestMethod.GET)
+    public Vector<Subject> listThemes(){
+        return new SubjectDAO().getAllSubjects();
+    }
+
+    @RequestMapping(value = "/blocks/{workID}/list", method = RequestMethod.GET)
+    public Vector<ExerciseGroup> listThemes(@PathVariable Integer workID){
+        return new ExerciseGroupDAO().getAllExerciseGroups(workID);
+    }
 }

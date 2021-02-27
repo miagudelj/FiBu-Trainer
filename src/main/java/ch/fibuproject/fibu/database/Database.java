@@ -24,7 +24,6 @@ public class Database {
     private static int port, poolSize;
     private static HikariDataSource hikari;
     private static PreparedStatement pst;
-    private static ResultSet results;
 
     private Database() {
 
@@ -52,8 +51,24 @@ public class Database {
      */
     public static void init(){
         openConnection();
-        // Note: Due to the size of the current database it no longer generates out of this program. You will have to use
-        // an sql dump file and insert it into MySQLWorkbench or PHPMyAdmin.
+        //Note: Due to the size of the current database it no longer generates out of this program. You will have to use
+        //an sql dump file and insert it into MySQLWorkbench or PHPMyAdmin.
+//        try {
+//            List<String> lines = Files.readAllLines(Paths.get(System.getProperty("user.dir")+"\\src\\main\\resources\\test.sql"), StandardCharsets.UTF_8);
+//            StringBuilder sqlDB = new StringBuilder();
+//            for (String s:lines) {
+//                if (!s.startsWith("-")&&!s.startsWith(System.lineSeparator())){
+//                    sqlDB.append(s).append("\n");
+//                }
+//            }
+//            Connection conn = getConnection();
+//            PreparedStatement pstDB = createPreparedStatement(conn, sqlDB.toString());
+//
+//            pstDB.execute();
+//
+//        }catch (SQLException | IOException e){
+//            e.printStackTrace();
+//        }
     }
 
     /**

@@ -21,16 +21,21 @@ $( document ).ready(
 function sendLogin(form) {
 
     form.preventDefault();
-    var formData = {
-        username : $("#username").val(),
-        password : $("#password").val()
-    }
+    var formJqObj = $("#login-form");
+    var formDataObj = {};
+    (function(){
+        formJqObj.find(":input").not("[type='submit']").not("[type='reset']").each(function(){
+            var thisInput = $(this);
+            formDataObj[thisInput.attr("name")] = thisInput.val();
+        });
+    })();
+    console.log(formDataObj);
     $.ajax({
         url: window.location.origin+"/user/login",
         contentType : "application/json",
         type: "POST",
         dataType: 'json',
-        data: JSON.stringify(formData)
+        data: JSON.stringify(formDataObj)
     })
 
         /**
@@ -58,8 +63,9 @@ function sendLogin(form) {
 function sendLogout() {
 
     $.ajax({
-        url: "/user/logout",
         type: "GET",
+        url: window.location.origin+"/user/logout",
+        type: "DELETE",
         dataType: "text"
     })
 

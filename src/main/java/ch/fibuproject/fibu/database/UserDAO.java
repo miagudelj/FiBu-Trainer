@@ -26,7 +26,7 @@ public class UserDAO {
     }
 
     public User getUser(String username) {
-        User user = null;
+        User user;
         String sqlStatement;
         Map<Integer, Object> values;
         ResultSet results;
@@ -67,7 +67,7 @@ public class UserDAO {
     }
 
     public Vector<User> getAllUsers(int id, int filteroption) {
-        Vector<User> users = null;
+        Vector<User> users;
         User user;
         String sqlStatement;
         Map<Integer, Object> values;
