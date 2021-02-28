@@ -1,9 +1,9 @@
 package ch.fibuproject.fibu.model;
 
 /**
- * @author Ciro Brodmann
- *
  * Defines user types.
+ *
+ * @author Ciro Brodmann
  */
 
 public enum UserType {
