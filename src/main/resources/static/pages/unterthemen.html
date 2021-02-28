@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" width="100px" href="../img/fibu_logo.png">
+    <link rel="shortcut icon" href="../img/fibu_logo.png">
     <!-- css sheet for own style -->
     <link rel="stylesheet" type="text/css" href="../styles/main_style.css">
     <!-- binding bootstrap css -->
@@ -29,6 +29,8 @@
             crossorigin="anonymous"></script>
     <!-- local js -->
     <script src="../js/login.js"></script>
+    <script src="../js/userverwaltung.js"></script>
+    <script src="../js/goBack.js"></script>
     <script src="../js/js.cookies.js"></script>
     <script src="../js/home.js"></script>
 
@@ -39,7 +41,7 @@
     <nav class="navbar fixed-top">
         <!-- nav brand -->
         <div class="navbar-brand">
-            <img src="../img/fibu_logo.png"/>
+            <img src="../img/fibu_logo.png" alt="FiBu-Logo"/>
         </div>
         <!-- search bar -->
         <form class="search form-inline">
@@ -49,14 +51,12 @@
         <!-- logout -->
         <div class="navbar-nav flex-row ml-md-auto d-md-flex">
             <button name="benutzerverwaltung" class="btn" id="userverwaltung" title="Benutzerverwaltung">
-                <a href="klassen.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
-                         viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                        <path fill-rule="evenodd"
-                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                    </svg>
-                </a>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
+                     viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                    <path fill-rule="evenodd"
+                          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg>
             </button>
             <button name="sign out" class="btn" id="logoutButton" title="Log Out">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -70,13 +70,13 @@
         </div>
     </nav>
 </header>
-<div class="container">
+<div class="container unterthemen">
     <button name="zuruek" class="btn" id="backButton">
-        <a href="home.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-            </svg>
-        </a>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+             viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
     </button>
     <h1>MWST</h1>
     <!-- total score-->

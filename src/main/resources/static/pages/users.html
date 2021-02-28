@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" width="100px" href="../img/fibu_logo.png">
+    <link rel="shortcut icon" href="../img/fibu_logo.png">
     <!-- css sheet for own style -->
     <link rel="stylesheet" type="text/css" href="../styles/userverwaltung.css">
     <!-- binding bootstrap css -->
@@ -30,6 +30,8 @@
     <!-- local js -->
     <script src="../js/klassen.js"></script>
     <script src="../js/login.js"></script>
+    <script src="../js/userverwaltung.js"></script>
+    <script src="../js/goBack.js"></script>
     <script src="../js/js.cookies.js"></script>
 
     <title>FiBu Trainer - Benutzerverwaltung</title>
@@ -39,7 +41,7 @@
     <nav class="navbar fixed-top">
         <!-- nav brand -->
         <div class="navbar-brand">
-            <img src="../img/fibu_logo.png"/>
+            <img src="../img/fibu_logo.png" alt="FiBu-Logo"/>
         </div>
         <!-- search bar -->
         <form class="search form-inline">
@@ -49,14 +51,12 @@
         <!-- logout -->
         <div class="navbar-nav flex-row ml-md-auto d-md-flex">
             <button name="benutzerverwaltung" class="btn" id="userverwaltung" title="Benutzerverwaltung">
-                <a href="klassen.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
-                         viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                        <path fill-rule="evenodd"
-                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                    </svg>
-                </a>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
+                     viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                    <path fill-rule="evenodd"
+                          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg>
             </button>
             <button name="sign out" class="btn" id="logoutButton" title="Log Out">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -70,15 +70,13 @@
         </div>
     </nav>
 </header>
-<div class="container">
+<div class="container users">
     <button name="zurück" class="btn" id="backButton" title="zurück">
-        <a href="klassen.html">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left"
-                 viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-            </svg>
-        </a>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left"
+             viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
     </button>
     <h1>Benutzerverwalung - Bentzerübersicht</h1>
     <!-- Buttonleiste -->
@@ -99,7 +97,7 @@
                                 <input type="text" name="username" id="username" class="form-control"
                                        placeholder="Username" autofocus required/>
                                 <input type="text" name="password" id="password" class="form-control"
-                                       placeholder="Passwort" autofocus required/>
+                                       placeholder="Passwort" required/>
                                 <div class="row">
                                     <div class="col-6">
                                         <select class="form-control" id="roleSelect">
@@ -127,7 +125,7 @@
         </div>
     </div>
     <div class="row list" id="bv-benutzer">
-        <!-- block -->
+        <!-- block --><!--
         <div class="col-12">
             <div class="block">
                 <div class="row">
@@ -138,65 +136,70 @@
                         Klasse
                     </div>
                     <div class="col-1">
-                        <button class="btn edit" id="editButton" title="Benutzer bearbeiten" data-toggle="modal" data-target="#editUserModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <button class="btn edit" id="editButton" title="Benutzer bearbeiten" data-toggle="modal"
+                                data-target="#editUserModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pencil"
+                                 viewBox="0 0 16 16">
                                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                             </svg>
                         </button>
-                        <!-- Modalfenster -->
-                        <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title" id="ModalLongTitle">Neuer Benutzer</h3>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- form -->
-                                        <div class="form-group">
-                                            <input type="text" name="username" id="username" class="form-control"
-                                                   placeholder="Username" autofocus required/>
-                                            <input type="text" name="password" id="password" class="form-control"
-                                                   placeholder="Passwort" autofocus required/>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <select class="form-control" id="roleSelect">
-                                                        <option>Admin</option>
-                                                        <option>Schüler</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-6" id="klasseSelect">
-                                                    <select class="form-control" size="5">
-                                                        <option>i3a</option>
-                                                        <option>h2b</option>
-                                                        <option>g4e</option>
-                                                        <option>i3a</option>
-                                                        <option>h2b</option>
-                                                        <option>g4e</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                        <button type="button" class="btn btn-primary" id="saveUserButton">Speichern</button>
-                                    </div>
+                         --><!-- Modalfenster --><!-- 
+        <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog"
+             aria-labelledby="ModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="ModalLongTitle">Neuer Benutzer</h3>
+                    </div>
+                    <div class="modal-body">
+                         --><!-- form --><!-- 
+                        <div class="form-group">
+                            <input type="text" name="username" id="username" class="form-control"
+                                   placeholder="Username" required/>
+                            <input type="text" name="password" id="password" class="form-control"
+                                   placeholder="Passwort" required/>
+                            <div class="row">
+                                <div class="col-6">
+                                    <select class="form-control" id="roleSelect">
+                                        <option>Admin</option>
+                                        <option>Schüler</option>
+                                    </select>
+                                </div>
+                                <div class="col-6" id="klasseSelect">
+                                    <select class="form-control" size="5">
+                                        <option>i3a</option>
+                                        <option>h2b</option>
+                                        <option>g4e</option>
+                                        <option>i3a</option>
+                                        <option>h2b</option>
+                                        <option>g4e</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-1">
-                        <button class="btn delete" id="deleteUserButton" title="Benutzer löschen">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                            </svg>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                        </button>
+                        <button type="button" class="btn btn-primary" id="saveUserButton">Speichern
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- block -->
+    </div>
+    <div class="col-1">
+        <button class="btn delete" id="deleteUserButton" title="Benutzer löschen">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                 class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+            </svg>
+        </button>
+    </div>
+</div>
+</div>
+</div>-->
+        <!-- block --><!--
         <div class="col-12">
             <div class="block">
                 <div class="row">
@@ -225,7 +228,7 @@
                 </div>
             </div>
         </div>
-        <!-- block -->
+         --><!-- block --><!-- 
         <div class="col-12">
             <div class="block">
                 <div class="row">
@@ -254,7 +257,7 @@
                 </div>
             </div>
         </div>
-        <!-- block -->
+         --><!-- block --><!-- 
         <div class="col-12">
             <div class="block">
                 <div class="row">
@@ -283,7 +286,7 @@
                 </div>
             </div>
         </div>
-        <!-- block -->
+         --><!-- block --><!--
         <div class="col-12">
             <div class="block">
                 <div class="row">
@@ -311,7 +314,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
 </body>
