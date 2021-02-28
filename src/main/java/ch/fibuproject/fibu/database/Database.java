@@ -12,10 +12,10 @@ import java.sql.SQLException;
 import java.util.Map;
 
 /**
+ * Database class. Handles calls to database. To a certain degree reused from a previous project.
+ *
  * @author Ciro Brodmann
  * @author Felix Reiniger
- *
- * Database class. Handles calls to database. To a certain degree reused from a previous project.
  */
 
 public class Database {
@@ -113,20 +113,16 @@ public class Database {
     }
 
 
-    // Retrieving methods from here onwards
-    // TODO Create Methods to get data from db
-
+    /**
+     * executes a select query without variable values
+     * @param query the SQL query to be executed
+     * @return the answer from this query
+     * @throws SQLException throws an sqlexception if something goes wrong with the sql query
+     */
     static synchronized DBQueryAnswer simpleSelect(String query) throws SQLException {
         DBQueryAnswer answer = new DBQueryAnswer();
 
         try {
-            /*
-            conn = getConnection();
-            pst = conn.prepareStatement(query);
-
-            results = pst.executeQuery();
-
-             */
             answer.setConn(getConnection());
             answer.setPst(answer.getConn().prepareStatement(query));
 
@@ -139,19 +135,17 @@ public class Database {
         return answer;
     }
 
+    /**
+     * executes a select query with variable values
+     * @param query the select query to be executed
+     * @param values the variable values to be inserted into the prepared statement
+     * @return the answer from this query
+     * @throws SQLException throws an sqlexception if something goes wrong with the sql query
+     */
     static synchronized DBQueryAnswer selectStatement(String query, Map<Integer, Object> values) throws SQLException {
         DBQueryAnswer answer = new DBQueryAnswer();
 
         try {
-            /*
-            conn = getConnection();
-            pst = conn.prepareStatement(query);
-
-            setValues(values);
-
-            results = pst.executeQuery();
-
-             */
 
             answer.setConn(getConnection());
             answer.setPst(answer.getConn().prepareStatement(query));
@@ -167,17 +161,17 @@ public class Database {
         return answer;
     }
 
+    /**
+     * executes an update, insert or delete statement with variable values
+     * @param query the statement to be executed
+     * @param values the variable values to be inserted into the prepared statement
+     * @return the result of the query
+     * @throws SQLException throws an sqlexception if something goes wrong with the sql query
+     */
     static synchronized DBResult updateStatement(String query, Map<Integer, Object> values) throws SQLException {
         DBQueryAnswer answer = new DBQueryAnswer();
 
         try {
-            /*
-            conn = getConnection();
-            pst = conn.prepareStatement(query);
-
-            setValues(values);
-
-             */
 
             answer.setConn(getConnection());
             answer.setPst(answer.getConn().prepareStatement(query));
@@ -203,6 +197,13 @@ public class Database {
 
     }
 
+    /**
+     * inserts variable values into the prepared statement. Can only handle NULL, Integer, Double and String. For all
+     * else, it just uses the toString() method.
+     * @param values the values to be inserted
+     * @param pst the prepared statement the values are supposed to be inserted into
+     * @throws SQLException throws an sqlexception if something goes wrong with the insertion
+     */
     private static void setValues(Map<Integer, Object> values, PreparedStatement pst) throws SQLException{
         for (int i = 1; values.containsKey(i); i++) {
             if (values.get(i) == null) {
@@ -218,66 +219,10 @@ public class Database {
         }
     }
 
-    /*
-    // this may not be used.
-    public static void simpleInsert(String insertStatement, String argument) throws SQLException{
-
-        Connection conn = null;
-
-        try {
-            conn = getConnection();
-            pst = conn.prepareStatement(insertStatement);
-            pst.setString(1, argument);
-
-            pst.execute();
-        } finally {
-            closeStatement(conn);
-        }
-
-    }
-
+    /**
+     * closes all objects related to the query in correct order
+     * @param answer the answer containing all query-related objects
      */
-
-
-
-    /*
-    public static void closeResultSet(ResultSet results){
-
-
-        if (results != null) {
-            try {
-                results.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-            } finally {
-                results = null;
-            }
-        }
-    }
-
-     */
-
-    private static void closeStatement(Connection conn) {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-            }
-        }
-
-        if (pst != null) {
-            try {
-                pst.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
     public static void closeStatement(DBQueryAnswer answer) {
         if (answer != null) {
 

@@ -9,16 +9,24 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * @author Ciro Brodman
- *
  * DAO for a Question.
+ *
+ * @author Ciro Brodmann
  */
 
 public class QuestionDAO {
 
+    /**
+     * default constructor
+     */
     public QuestionDAO() {
     }
 
+    /**
+     * gets the requested question from the database
+     * @param id the ID the question is identified by
+     * @return the requested Question or null if not found
+     */
     public Question getQuestion(int id) {
         String query;
         Map<Integer, Object> values;
@@ -52,10 +60,19 @@ public class QuestionDAO {
         return question;
     }
 
+    /**
+     * gets all questions from the database
+     * @return vector containing all questions or an empty one if none are found
+     */
     public Vector<Question> getAllQuestions() {
         return this.getAllQuestions(0);
     }
 
+    /**
+     * get all Questions associated with the designated ExerciseGroup (or all if exerciseGroupID < 1)
+     * @param exerciseGroupID the ID of the associated ExerciseGroup
+     * @return vector containing all questions or an empty one if none are found
+     */
     public Vector<Question> getAllQuestions(int exerciseGroupID) {
         String query;
         Vector<Question> questions;
@@ -96,15 +113,33 @@ public class QuestionDAO {
         return questions;
     }
 
+    /**
+     * saves a question to the database
+     * @param question the question to be saved
+     * @param exerciseGroupID the ID of the associated ExerciseGroup
+     * @return the result of the query
+     */
     public DBResult saveQuestion(Question question, int exerciseGroupID) {
         return this.updateStatement(question, exerciseGroupID, true);
     }
 
+    /**
+     * saves changes made to a question to the database
+     * @param question the question to be updated
+     * @param exerciseGroupID the ID of the associated ExerciseGroup
+     * @return the result of the query
+     */
     public DBResult updateQuestion(Question question, int exerciseGroupID) {
         return this.updateStatement(question, exerciseGroupID, false);
     }
 
-
+    /**
+     * this function handles insert and update statement to the database
+     * @param question the Question to be saved / updated
+     * @param exerciseGroupID the ID of the associated ExerciseGroup
+     * @param isNew true if the Question is new (--> insert), otherwise false (--> update)
+     * @return the results of the query
+     */
     private DBResult updateStatement(Question question, int exerciseGroupID, boolean isNew) {
         String query, middlePart;
         Map<Integer, Object> values;
@@ -137,6 +172,11 @@ public class QuestionDAO {
         }
     }
 
+    /**
+     * deletes a question from the database
+     * @param questionID the ID the question is identified by
+     * @return the results of the query
+     */
     public DBResult deleteQuestion(int questionID) {
         String query;
         Map<Integer, Object> values;
@@ -157,6 +197,13 @@ public class QuestionDAO {
         }
     }
 
+    /**
+     * inserts values from the ResultSet into the Java representation of a Question and gets all associated
+     * Subquestions from the database
+     * @param results the ResultSet the values are stored in
+     * @return the filled Question object
+     * @throws SQLException throws an sqlexception if anything during the database access process went wrong
+     */
     private Question setValues(ResultSet results) throws SQLException {
         Question question;
         SubquestionDAO subquestionDAO;

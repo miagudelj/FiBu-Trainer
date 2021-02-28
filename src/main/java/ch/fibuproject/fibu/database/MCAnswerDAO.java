@@ -10,13 +10,9 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * @author Ciro Brodmann
- *
  * DAO class for MCAnswer
  *
- * // DO NOT USE YET. THERE ARE THINGS THAT DON'T YET MAKE SENSE AND THAT I HAVE TO FIGURE OUT.
- * Right, so, at least the important one in getMCAnswer should be resolved. I can't guarantee yet, though, that it'll
- * work. If there's any issue, please don't hesitate to contact me.
+ * @author Ciro Brodmann
  */
 
 public class MCAnswerDAO {
@@ -24,9 +20,18 @@ public class MCAnswerDAO {
     public static final int FILTERBYUSERID = 1;
     public static final int FILTERBYMCOPTIONID = 2;
 
+    /**
+     * default constructor
+     */
     public MCAnswerDAO() {
     }
 
+    /**
+     * gets the requested MCAnswer from the database
+     * @param subquestionID the ID of the associated subquestion
+     * @param userID the Id of the associated user
+     * @return the requested MCAnswer object or null if not found
+     */
     public MCAnswer getMCAnswer(int subquestionID, int userID) {
         String query;
         Map<Integer, Object> values;
@@ -67,11 +72,20 @@ public class MCAnswerDAO {
         return mcAnswer;
     }
 
+    /**
+     * gets all MCAnswers from the database
+     * @return vector containing all MCAnswers or an empty one if none are found
+     */
     public Vector<MCAnswer> getAllMCAnswers() {
         return this.getAllMCAnswers(0, 0);
     }
 
-
+    /**
+     * gets all MCAnswers matching to the filter from the database
+     * @param id the ID of either the associated user or MCOption, depending on filter
+     * @param filter the filter to be used (0 = no filter, 1 = filter by userID, 2 = filter by mcOptionID)
+     * @return vector containing all matching MCAnswers or an empty one if none are found
+     */
     public Vector<MCAnswer> getAllMCAnswers(int id, int filter) {
         String query;
         Vector<MCAnswer> mcAnswers;
@@ -119,6 +133,11 @@ public class MCAnswerDAO {
         return mcAnswers;
     }
 
+    /**
+     * saves an MCAnswer to the Database, replaces it if one with the same ID already exists
+     * @param mcAnswer the MCAnswer to be saved
+     * @return the result of the query
+     */
     public DBResult saveMCAnswer(MCAnswer mcAnswer) {
         String query, middlePart;
         int mcAnswerID = 0;
@@ -176,6 +195,12 @@ public class MCAnswerDAO {
         }
     }
 
+    /**
+     * deletes an MCAnswer from the database
+     * @param mcAnswerID the ID of the MCAnswer
+     * @param userID the ID of the corresponding user
+     * @return the result of the query
+     */
     public DBResult deleteMCAnswer(int mcAnswerID, int userID) {
         String query;
         Map<Integer, Object> values;
@@ -198,6 +223,12 @@ public class MCAnswerDAO {
         }
     }
 
+    /**
+     * inserts values from the ResultSet into the Java representation of a MCAnswer
+     * @param results the ResultSet the values are stored in
+     * @return the filled MCAnswer object
+     * @throws SQLException throws an sqlexception if anything during the database access process went wrong
+     */
     private MCAnswer setValues(ResultSet results) throws SQLException {
         MCAnswer mcAnswer;
 

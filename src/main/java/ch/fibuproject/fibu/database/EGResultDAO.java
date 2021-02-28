@@ -11,9 +11,9 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * @author Ciro Brodmann
- *
  * DAO for EGResult.
+ *
+ * @author Ciro Brodmann
  */
 
 public class EGResultDAO {
@@ -21,9 +21,18 @@ public class EGResultDAO {
     public static final int FILTERBYUSERID = 1;
     public static final int FILTERBYEXERCISEGROUPID = 2;
 
+    /**
+     * default constructor
+     */
     public EGResultDAO() {
     }
 
+    /**
+     * gets an EGResult from the database
+     * @param exerciseGroupID the ID of the ExerciseGroup the EGResult is associated with
+     * @param userID the ID of the user the EGResult is associated with
+     * @return the corresponding EGResult, or null if not found
+     */
     public EGResult getEGResult(int exerciseGroupID, int userID) {
         String query;
         Map<Integer, Object> values;
@@ -59,11 +68,20 @@ public class EGResultDAO {
         return egResult;
     }
 
+    /**
+     * gets all EGResults from the database
+     * @return Vector containing all EGResults, or empty vector if none are found
+     */
     public Vector<EGResult> getAllEGResults() {
         return this.getAllEGResults(0, 0);
     }
 
-
+    /**
+     * gets all EGResults which comply with the filter restrictions
+     * @param id the ID of either a user or exercise group, depending on filter
+     * @param filter the filter to be used (0 = no filter / all, 1 = filter by userID, 2 = filter by exerciseGroupID)
+     * @return Vector with all matching EGResults, or all EGResults, depending on filter
+     */
     public Vector<EGResult> getAllEGResults(int id, int filter) {
         String query;
         Vector<EGResult> egResults;
@@ -111,6 +129,11 @@ public class EGResultDAO {
         return egResults;
     }
 
+    /**
+     * saves an EGResult to the database, replaces it if one with the same ID already exists
+     * @param egResult the EGResult to be saved
+     * @return the result of the query
+     */
     public DBResult saveEGResult(EGResult egResult) {
         String query, middlePart;
         int egResultID = 0;
@@ -172,6 +195,12 @@ public class EGResultDAO {
         }
     }
 
+    /**
+     * deletes an EGResult from the database
+     * @param exerciseGroupID the ID of the associated ExerciseGroup
+     * @param userID the ID of the associated user
+     * @return the result of the query
+     */
     public DBResult deleteEGResult(int exerciseGroupID, int userID) {
         String query;
         Map<Integer, Object> values;
@@ -194,6 +223,12 @@ public class EGResultDAO {
         }
     }
 
+    /**
+     * inserts values from the ResultSet into the Java representation of a BookEntry
+     * @param results the ResultSet the values are stored in
+     * @return the filled EGResult object
+     * @throws SQLException throws an sqlexception if anything during the database access process went wrong
+     */
     private EGResult setValues(ResultSet results) throws SQLException {
         EGResult egResult;
 

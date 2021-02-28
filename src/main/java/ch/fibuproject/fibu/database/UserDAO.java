@@ -22,9 +22,17 @@ public class UserDAO {
     public static final int FILTERBYCLASSID = 1;
     public static final int FILTERBYTYPEID = 2;
 
+    /**
+     * default constructor
+     */
     public UserDAO() {
     }
 
+    /**
+     * gets the requested user from the database
+     * @param username the username of the requested user
+     * @return the requested user or an empty user if not found
+     */
     public User getUser(String username) {
         User user;
         String sqlStatement;
@@ -62,10 +70,20 @@ public class UserDAO {
         return user;
     }
 
+    /**
+     * gets all users from the database
+     * @return vector of all users or an empty one if none were found
+     */
     public Vector<User> getAllUsers() {
         return this.getAllUsers(0, NOFILTER);
     }
 
+    /**
+     * gets all users matching to a certain classID or typeID (or all if filter = 0)
+     * @param id the ID of either the associated class or type
+     * @param filteroption the filteroption to be used (0 = no filter, 1 = filter by classID, 2 = filter by typeID)
+     * @return vector of all matching users or an empty one if none were found
+     */
     public Vector<User> getAllUsers(int id, int filteroption) {
         Vector<User> users;
         User user;
@@ -116,10 +134,21 @@ public class UserDAO {
         return users;
     }
 
+    /**
+     * saves a user who doesn't belong to any class to the database
+     * @param user the user to be saved
+     * @return the results of the query
+     */
     public DBResult saveUser(User user) {
         return saveUser(user, 0);
     }
 
+    /**
+     * saves a user to the database
+     * @param user the user to be saved
+     * @param classID the class the user belongs to
+     * @return the results of the query
+     */
     public DBResult saveUser(User user, int classID) {
 
         String query;
@@ -153,10 +182,21 @@ public class UserDAO {
         }
     }
 
+    /**
+     * saves changes made to a user to the database, doesn't change its class
+     * @param user the user to be updated
+     * @return the results of the query
+     */
     public DBResult updateUser(User user) {
         return updateUser(user, 0);
     }
 
+    /**
+     * saves changes made to a user to the database, changes its class if classID > 0
+     * @param user the user to be updated
+     * @param classID the ID of the associated class
+     * @return the results of the query
+     */
     public DBResult updateUser(User user, int classID) {
         String query;
         Map<Integer, Object> values;
@@ -204,6 +244,12 @@ public class UserDAO {
         return setUserClass(0, username);
     }
 
+    /**
+     * sets the user's class and saves it to the database
+     * @param classID the ID of the Class to be set
+     * @param username the username the user is identified by
+     * @return the results of the query
+     */
     public DBResult setUserClass(int classID, String username) {
         String query;
         Map<Integer, Object> values;
@@ -234,6 +280,11 @@ public class UserDAO {
         }
     }
 
+    /**
+     * deletes a user from the database
+     * @param userID the userID the user is identified by
+     * @return the results of the query
+     */
     public DBResult deleteUser(int userID) {
         String query;
         Map<Integer, Object> values;
@@ -254,6 +305,12 @@ public class UserDAO {
         }
     }
 
+    /**
+     * inserts values from the ResultSet into the Java representation of an ExerciseGroup
+     * @param user the User the values are supposed to be inserted into
+     * @param results the ResultSet the values are stored in
+     * @throws SQLException throws an sqlexception if anything during the database access process went wrong
+     */
     private void setValues(User user, ResultSet results) throws SQLException {
         user.setId(results.getInt("userID"));
         user.setUsername(results.getString("username"));

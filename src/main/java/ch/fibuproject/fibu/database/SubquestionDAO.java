@@ -12,16 +12,24 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * @author Ciro Brodmann
- *
  * DAO for a Subquestion
+ *
+ * @author Ciro Brodmann
  */
 
 public class SubquestionDAO {
 
+    /**
+     * default constructor
+     */
     public SubquestionDAO() {
     }
 
+    /**
+     * gets the requested subquestion from the database
+     * @param id the ID the Subquestion is identified by
+     * @return the requested Subquestion or null if not found
+     */
     public Subquestion getSubquestion(int id) {
         String query;
         Map<Integer, Object> values;
@@ -55,10 +63,19 @@ public class SubquestionDAO {
         return subquestion;
     }
 
+    /**
+     * gets all Subquestions
+     * @return vector containing all subquestions or an empty one if none are found
+     */
     public Vector<Subquestion> getAllSubquestions() {
         return this.getAllSubquestions(0);
     }
 
+    /**
+     * gets all Subquestions associated with a Question
+     * @param questionID the ID of the associated Question
+     * @return vector with all matching subquestions or an empty one if none are found
+     */
     public Vector<Subquestion> getAllSubquestions(int questionID) {
         String query;
         Vector<Subquestion> subquestions;
@@ -99,15 +116,33 @@ public class SubquestionDAO {
         return subquestions;
     }
 
+    /**
+     * saves a subquestion to the database
+     * @param subquestion the subquestion to be saved
+     * @param questionID the ID of the associated Question
+     * @return the result of the query
+     */
     public DBResult saveSubquestion(Subquestion subquestion, int questionID) {
         return this.updateStatement(subquestion, questionID, true);
     }
 
+    /**
+     * saves changes made to a subquestion to the database
+     * @param subquestion the subquestion to be updated
+     * @param questionID the ID of the associated Question
+     * @return the result of the query
+     */
     public DBResult updateSubquestion(Subquestion subquestion, int questionID) {
         return this.updateStatement(subquestion, questionID, false);
     }
 
-
+    /**
+     * this function handles insert and update statement to the database
+     * @param subquestion the Subquestion to be saved / updated
+     * @param questionID the ID of the associated Question
+     * @param isNew true if the Subquestion is new (--> insert), otherwise false (--> update)
+     * @return the results of the query
+     */
     private DBResult updateStatement(Subquestion subquestion, int questionID, boolean isNew) {
        String query, middlePart;
        Map<Integer, Object> values;
@@ -140,6 +175,11 @@ public class SubquestionDAO {
        }
     }
 
+    /**
+     * deletes a subquestion from the database
+     * @param subquestionID the ID the subquestion is identified by
+     * @return the results of the query
+     */
     public DBResult deleteSubquestion(int subquestionID) {
         String query;
         Map<Integer, Object> values;
@@ -160,6 +200,13 @@ public class SubquestionDAO {
         }
     }
 
+    /**
+     * inserts values from the ResultSet into the Java representation of a Subquestion and gets all associated
+     * MCOptions from the database. Creates an MCQuestion if the type suggests that it should.
+     * @param results the ResultSet the values are stored in
+     * @return the filled Subquestion object
+     * @throws SQLException throws an sqlexception if anything during the database access process went wrong
+     */
     private Subquestion setValues(ResultSet results) throws SQLException {
         Subquestion subquestion;
         SQType type;

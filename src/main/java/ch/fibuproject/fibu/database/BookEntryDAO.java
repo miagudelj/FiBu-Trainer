@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * @author Ciro Brodmann
- *
  * DAO object for book entries
+ *
+ * @author Ciro Brodmann
  */
 
 public class BookEntryDAO {
@@ -20,9 +20,18 @@ public class BookEntryDAO {
     public static final int FILTERBYUSERID = 1;
     public static final int FILTERBYSUBQUESTIONID = 2;
 
+    /**
+     * default constructor
+     */
     public BookEntryDAO() {
     }
 
+    /**
+     * gets a BookEntry from the database
+     * @param subquestionID the ID of the subquestion the BookEntry belongs to
+     * @param userID the ID of the User it belongs to
+     * @return the requested BookEntry, or null if not found
+     */
     public BookEntry getBookEntry(int subquestionID, int userID) {
         String query;
         Map<Integer, Object> values;
@@ -58,11 +67,20 @@ public class BookEntryDAO {
         return bookEntry;
     }
 
+    /**
+     * gets all BookEntries from the database
+     * @return a vector containing all BookEntries, an empty vector if none are found
+     */
     public Vector<BookEntry> getAllBookEntries() {
         return this.getAllBookEntries(0, 0);
     }
 
-
+    /**
+     * gets all BookEntries belonging to either a user, a subquestion or simply all, depending on the filter
+     * @param id the ID of either the user or the subquestion, depending on filter
+     * @param filter the filter to be used (0 = no filter / all, 1 = filter by userID, 2 = filter by subquestionID)
+     * @return a vector containing all matching BookEntries, an empty vector if none are found
+     */
     public Vector<BookEntry> getAllBookEntries(int id, int filter) {
         String query;
         Vector<BookEntry> bookEntries;
@@ -110,6 +128,11 @@ public class BookEntryDAO {
         return bookEntries;
     }
 
+    /**
+     * saves a BookEntry to the database. If one with the same user and subquestion exists already, it gets replaced.
+     * @param bookEntry the BookEntry to be saved
+     * @return the result of the query
+     */
     public DBResult saveBookEntry(BookEntry bookEntry) {
         String query, middlePart;
         int bookEntryID = 0;
@@ -173,6 +196,12 @@ public class BookEntryDAO {
         }
     }
 
+    /**
+     * deletes a bookEntry from the database
+     * @param subquestionID the ID of the subquestion the bookEntry belongs to
+     * @param userID the ID of the user the BookEntry belongs to
+     * @return the result of the query
+     */
     public DBResult deleteBookEntry(int subquestionID, int userID) {
         String query;
         Map<Integer, Object> values;
@@ -195,6 +224,12 @@ public class BookEntryDAO {
         }
     }
 
+    /**
+     * inserts values from the ResultSet into the Java representation of a BookEntry
+     * @param results the ResultSet the values are stored in
+     * @return the filled BookEntry object
+     * @throws SQLException throws an sqlexception if anything during the database access process went wrong
+     */
     private BookEntry setValues(ResultSet results) throws SQLException {
         BookEntry bookEntry;
 

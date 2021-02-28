@@ -10,16 +10,24 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * @author Ciro Brodmann
- *
  * DAO object for AccountChart
+ *
+ * @author Ciro Brodmann
  */
 
 public class AccountChartDAO {
 
+    /**
+     * default constructor
+     */
     public AccountChartDAO() {
     }
 
+    /**
+     * Gets an accountChart and its containing accounts from the database
+     * @param id the ID of the accountChart
+     * @return the requested AccountChart, null if not found
+     */
     public AccountChart getAccountChart(int id) {
         String query;
         Map<Integer, Object> values;
@@ -53,7 +61,10 @@ public class AccountChartDAO {
         return accountChart;
     }
 
-
+    /**
+     * retrieves every single AccountChart from the Database
+     * @return a Vector containing all AccountCharts, an empty vector if nothing is found
+     */
     public Vector<AccountChart> getAllAccountCharts() {
         String query;
         Vector<AccountChart> accountCharts;
@@ -88,15 +99,30 @@ public class AccountChartDAO {
         return accountCharts;
     }
 
+    /**
+     * saves an AccountChart to the database
+     * @param accountChart the accountchart to be saved
+     * @return the result of the query
+     */
     public DBResult saveAccountChart(AccountChart accountChart) {
         return this.updateStatement(accountChart, true);
     }
 
+    /**
+     * updates an existing AccountChart in the database
+     * @param accountChart the AccountChart to be updated
+     * @return the result of the query
+     */
     public DBResult updateAccountChart(AccountChart accountChart) {
         return this.updateStatement(accountChart, false);
     }
 
-
+    /**
+     * this function handles insert and update statement to the database
+     * @param accountChart the AccountChart to be saved/updated
+     * @param isNew true if the AccountChart is new (--> insert), otherwise false (--> update)
+     * @return the result of the query
+     */
     private DBResult updateStatement(AccountChart accountChart, boolean isNew) {
         String query, middlePart;
         Map<Integer, Object> values;
@@ -123,6 +149,12 @@ public class AccountChartDAO {
         }
     }
 
+    /**
+     * adds an account to an AccountChart in the Database
+     * @param accountID the ID of the account to be added
+     * @param accountChartID the ID of the AccountChart the account is supposed to be added to
+     * @return the result of the query
+     */
     public DBResult addAccount(int accountID, int accountChartID) {
         String query;
         Map<Integer, Object> values;
@@ -145,6 +177,12 @@ public class AccountChartDAO {
         }
     }
 
+    /**
+     * removes an account from an accountChart
+     * @param accountID the ID of the account to be removed
+     * @param accountChartID the ID of the AccountChart the account is supposed to be removed from
+     * @return the result of the query
+     */
     public DBResult removeAccount(int accountID, int accountChartID) {
         String query;
         Map<Integer, Object> values;
@@ -167,6 +205,11 @@ public class AccountChartDAO {
         }
     }
 
+    /**
+     * deletes an AccountChart from the Database
+     * @param accountChartID the ID of the AccountChart which should be removed
+     * @return the result of the query
+     */
     public DBResult deleteAccountChart(int accountChartID) {
         String query;
         Map<Integer, Object> values;
@@ -187,6 +230,13 @@ public class AccountChartDAO {
         }
     }
 
+    /**
+     * inserts values from a resultSet into the Java object and gets all accounts belonging to the requested
+     * AccountChart from the database
+     * @param results the ResultSet where the values are stored in
+     * @return the Java AccountChart object with the values
+     * @throws SQLException throws an sqlexception if anything during the database access process went wrong
+     */
     private AccountChart setValues(ResultSet results) throws SQLException {
         AccountChart accountChart;
         AccountDAO accountDAO
